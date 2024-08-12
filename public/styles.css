@@ -1,0 +1,482 @@
+/* 基本样式 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    background-color: #f6f8fa;
+    color: #24292e;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 导航栏样式 */
+header {
+    background-color: #24292e;
+    padding: 16px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .logo {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+/* 主要内容样式 */
+main {
+    padding: 20px;
+}
+
+.hero {
+    background-color: #0366d6;
+    color: #ffffff;
+    padding: 40px;
+    text-align: center;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+.hero p {
+    font-size: 20px;
+}
+
+/* 博客文章样式 */
+.posts {
+    margin-top: 20px;
+}
+
+.posts article {
+    background-color: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.posts h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.posts p {
+    font-size: 16px;
+    color: #586069;
+}
+
+.posts button {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.posts button:hover {
+    background-color: #218838;
+}
+
+/* 导航栏样式 */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* 取消鼠标悬停时的下划线 */
+nav ul li a:hover, .dropdown:hover .dropbtn {
+    text-decoration: none; /* 取消下划线 */
+    background-color: #111; /* 保持背景颜色变化 */
+}
+
+/* 折叠菜单样式 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}/* 导航栏样式 */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav ul li a:hover, .dropdown:hover .dropbtn {
+    text-decoration: none; /* 取消下划线 */
+    background-color: #111;
+}
+
+/* 折叠菜单样式 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}/* 导航栏样式 */
+nav {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+}
+
+nav .logo {
+    margin-right: 20px;
+}
+
+nav .nav-title {
+    color: white;
+    font-size: 24px;
+    margin-right: auto;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav ul li a:hover, .dropdown:hover .dropbtn {
+    text-decoration: none; /* 取消下划线 */
+    background-color: #111;
+}
+
+/* 折叠菜单样式 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 添加这行 */
+    background-color: #333;
+    padding: 0 20px; /* 添加内边距 */
+}
+
+nav .logo {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav .nav-title {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    flex-grow: 1; /* 使标题占据剩余空间 */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+/* 主要内容样式 */
+main {
+    padding: 20px;
+}
+
+.hero {
+    background-color: #0366d6;
+    color: #ffffff;
+    padding: 40px;
+    text-align: center;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+.hero p {
+    margin: 0;
+    font-size: 18px;
+}/* 登录和注册表单样式 */
+.login-form, .register-form {
+    background-color: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.login-form h2, .register-form h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.login-form input, .register-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.login-form button, .register-form button {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.login-form button:hover, .register-form button:hover {
+    background-color: #218838;
+}
+
+/* 上传文件表单样式 */
+.upload-file {
+    background-color: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.upload-file h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.upload-file input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.upload-file button {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.upload-file button:hover {
+    background-color: #218838;
+}
+
+/* 下载文件样式 */
+.download-file {
+    background-color: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.download-file h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.download-file a {
+    color: #0366d6;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.download-file a:hover {
+    text-decoration: underline;
+}/* 写文章表单样式 */
+.write-post {
+    background-color: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.write-post h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.write-post label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.write-post input[type="text"],
+.write-post textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.write-post button {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.write-post button:hover {
+    background-color: #218838;
+}
