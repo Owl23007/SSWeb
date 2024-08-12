@@ -10,7 +10,7 @@
                     <li><a href="#">主页</a></li>
                     <li><a href="#">资源</a></li>
                     <li><a href="#">文章</a></li>
-                    <li><a href="login.html" id="loginLink">登录</a></li>
+                    <li><router-link to="/login">登录</router-link></li>
                     <li class="dropdown">
                         <a href="#" class="dropbtn">更多</a>
                         <div class="dropdown-content">
@@ -42,7 +42,6 @@
 <script>
 export default {
     name: 'HomePage',
-
 };
 </script>
 
