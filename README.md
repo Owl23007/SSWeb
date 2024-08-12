@@ -1,2 +1,18 @@
 # SSWeb
-A website to store and share.
+
+**SSWeb** —— 一个存储和共享网站，试图去重现互联网共享精神。
+
+## 预计功能特性
+
+- **博客撰写和分享**：分享工作经验或者生活感悟，对感兴趣的话题进行讨论！。
+- **文件上传和下载**：轻松上传与下载文件，无缝体验。
+
+## 快速开始
+
+按照以下步骤，本地运行您的SSWeb：
+
+1. **克隆仓库**
+
+   ```bash
+   git clone https://github.com/Owl23007/SSWeb.git
+   cd SSWeb
