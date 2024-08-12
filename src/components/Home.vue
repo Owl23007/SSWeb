@@ -1,4 +1,3 @@
-```vue
 <template>
     <div>
         <header>
@@ -6,7 +5,7 @@
                 <a href="#" class="logo">
                     <img src="@/assets/logo.png" alt="logo" style="height: 40px;">
                 </a>
-                <span class="nav-title">Oii的存续院</span>
+                <span class="nav-title">主页|Oii的存续院</span>
                 <ul>
                     <li><a href="#">主页</a></li>
                     <li><a href="#">资源</a></li>
@@ -33,43 +32,135 @@
                 <h1>欢迎来到我的博客</h1>
                 <p>分享我的编程旅程和技术见解。</p>
             </section>
+            <section class="posts">
+                <!-- 这里可以动态添加文章 -->
+            </section>
         </main>
     </div>
 </template>
 
 <script>
-// eslint-disable-next-line
 export default {
-    name: 'Home', // eslint-disable-line vue/multi-word-component-names
-    data() {
-        return {
-            // 你可以在这里添加组件的数据
-        };
-    },
-    methods: {
-        // 你可以在这里添加组件的方法
-    }
+    name: 'HomePage',
+    
 };
 </script>
 
 <style scoped>
-/* 你可以在这里添加组件的样式 */
+/* 基本样式 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    background-color: #f6f8fa;
+    color: #24292e;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 导航栏样式 */
+header {
+    background-color: #24292e;
+    padding: 16px;
+}
+
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: #f8f9fa;
 }
 
-ul {
-    list-style-type: none;
+nav .logo {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
     display: flex;
-    gap: 15px;
+    margin: 0;
+    padding: 0;
 }
 
-li {
-    display: inline;
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: #ffffff;
+    font-size: 16px;
+}
+
+/* 主要内容样式 */
+main {
+    padding: 20px;
+}
+
+.hero {
+    background-color: #0366d6;
+    color: #ffffff;
+    padding: 40px;
+    text-align: center;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+.hero p {
+    font-size: 20px;
+}
+
+/* 博客文章样式 */
+.posts {
+    margin-top: 20px;
+}
+
+.posts article {
+    background-color: #ffffff;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.posts h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.posts p {
+    font-size: 16px;
+    color: #586069;
+}
+
+.posts button {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.posts button:hover {
+    background-color: #218838;
+}
+
+/* 折叠菜单样式 */
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
 
 .dropdown-content {
@@ -81,12 +172,19 @@ li {
     z-index: 1;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
     display: block;
+    text-align: left;
 }
 
-.hero {
-    text-align: center;
-    padding: 50px;
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 </style>
