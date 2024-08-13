@@ -29,7 +29,6 @@
 import axios from 'axios';
 import { ref } from 'vue';
 
-
 export default {
     name: 'LoginComponent',
     setup() {
@@ -40,11 +39,6 @@ export default {
         const islogin = ref(true);
         const text_info_prefix = ref('还没有账号？');
         const text_info = ref('注册');
-
-        const load = () => {
-            const doc = document.title;
-            console.log(doc)
-        };
         const toreg_or_login = () => {
             if (islogin.value) {
                 //相当于点了蓝色注册小字
@@ -93,16 +87,28 @@ export default {
                     return;
                 }
                 //下面写登录
-                const res = await login_request(username.value, password.value);
-                //后端回复的消息
-                if (res['data']['status'] == 'success') {
-                    console.log("登录成功。");
-                    //导航到主页
-                    window.location.href = "/";
-                } else {
-                    console.log(res['data']['message']);
+                try {
+                    const res = await login_request(username.value, password.value);
+                    //后端回复的消息
+                    if (res['data']['status'] == 'success') {
+                        console.log("登录成功。");
+                        //导航到主页
+
+                        //请求一些信息来显示
+
+                        window.location.href = "/";
+                    } else {
+                        alert(res['data']['message']);
+                        console.log(res['data']['message']);
+                    }
+                    return;
+                } catch (e) {
+                    alert("登录失败。");
+                    console.log(e);
+                    return;
                 }
-                return;
+
+
             }
             if (email.value == '' || username.value == '' || password.value == '') {
                 console.log("输入不能为空。");
@@ -110,24 +116,29 @@ export default {
             }
 
             //下面写注册(未加密)
-            const res = await register_request(username.value, password.value, email.value);
-
-            //后端回复的消息
-            if (res['data']['status'] == 'success') {
-                username.value = "";
-                password.value = "";
-                email.value = "";
-                islogin.value = true;
-                text_info_prefix.value = '还没有账号？';
-                text_info.value = '注册';
-                button_text.value = '登陆';
-                console.log("注册成功。");
+            try {
+                const res = await register_request(username.value, password.value, email.value);
+                if (res['data']['status'] == 'success') {
+                    username.value = "";
+                    password.value = "";
+                    email.value = "";
+                    islogin.value = true;
+                    text_info_prefix.value = '还没有账号？';
+                    text_info.value = '注册';
+                    button_text.value = '登陆';
+                    alert(res['data']['message']);
+                }
+                else
+                    console.log(res['data']['message']);
             }
-            else
-                console.log(res['data']['message']);
+            catch (e) {
+                alert("注册失败。");
+                console.log(e);
+                return;
+            }
         }
         return {
-            reg_or_login, load, toreg_or_login, text_info_prefix, text_info, button_text, islogin, password, email, username
+            reg_or_login, toreg_or_login, text_info_prefix, text_info, button_text, islogin, password, email, username
         }
     }
 };

@@ -7,5 +7,6 @@ const app = createApp(App);
 app.use(router);
 
 app.config.productionTip = false;
+app.config.globalProperties.$test = 'test';
 
 app.mount('#app');
