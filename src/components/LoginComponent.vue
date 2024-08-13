@@ -1,5 +1,5 @@
 <template>
-    <div class="login_container">
+    <div @class="login_container">
         <div class="login_form">
             <h2>登陆账号</h2>
             <div class="form-group">
@@ -29,6 +29,7 @@
 import axios from 'axios';
 import { ref } from 'vue';
 
+
 export default {
     name: 'LoginComponent',
     setup() {
@@ -39,6 +40,11 @@ export default {
         const islogin = ref(true);
         const text_info_prefix = ref('还没有账号？');
         const text_info = ref('注册');
+
+        const load = () => {
+            const doc = document.title;
+            console.log(doc)
+        };
         const toreg_or_login = () => {
             if (islogin.value) {
                 //相当于点了蓝色注册小字
@@ -121,11 +127,10 @@ export default {
                 console.log(res['data']['message']);
         }
         return {
-            reg_or_login, toreg_or_login, text_info_prefix, text_info, button_text, islogin, password, email, username
+            reg_or_login, load, toreg_or_login, text_info_prefix, text_info, button_text, islogin, password, email, username
         }
     }
 };
 </script>
 
-<style scoped src="@/assets/css/loginpage.css">
-</style>
+<style scoped src="@/assets/css/loginpage.css"></style>

@@ -6,12 +6,18 @@ const routes = [
   {
     path: '/login',
     name: 'loginPage',
-    component: loginPage
+    component: loginPage,
+    meta:{
+      title: '登录'
+    }
   },
   {
     path: '/',
     name: 'HomePage',
-    component: homePage
+    component: homePage,
+    meta:{
+      title: '首页'
+    }
   }
 ]
 
