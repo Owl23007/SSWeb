@@ -2,15 +2,15 @@
   <div id="app">
     <div>
       <header class="header_style">
-      <div class="nav_logo">
-        <nav>
-          <a href="#" class="logo">
-            <img src="@/assets/logo.png" alt="logo" style="height: 40px;">
-          </a>
-          <span class="nav_title">这里是标题</span>
-        </nav>
-      </div>
-      <div class="nav_menu">
+        <div class="nav_logo">
+          <nav>
+            <a href="#" class="logo">
+              <router-link to="/"><img src="@/assets/logo.png" alt="logo" style="height: 40px;"></router-link>
+            </a>
+            <span class="nav_title">这里是标题</span>
+          </nav>
+        </div>
+        <div class="nav_menu">
           <ul>
             <li>
               <div class="header_button">
@@ -19,12 +19,12 @@
             </li>
             <li>
               <div class="header_button">
-                <a href="#">资源</a>
+                <router-link to="/resource">资源</router-link>
               </div>
             </li>
             <li>
               <div class="header_button">
-                <a href="#">文章</a>
+                <router-link to="/blog">文章</router-link>
               </div>
             </li>
             <li>
@@ -37,16 +37,16 @@
                 <a>更多</a>
               </div>
               <div class="dropdown-content">
-                <a href="#">联系我们</a>
-                <a href="#">其他</a>
+                <router-link to="/callme">联系我们</router-link>
+                <router-link to="/more">其他</router-link>
               </div>
             </li>
-            <li id="userAvatar" style="display: none;">
+            <li style="display: none;">
               <img src="@/assets/default-avatar.png" alt="用户头像" style="height: 40px; border-radius: 50%;">
             </li>
           </ul>
-      </div>
-    </header>
+        </div>
+      </header>
     </div>
     <div class="container">
       <router-view></router-view>

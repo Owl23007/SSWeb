@@ -1,31 +1,3 @@
-<template>
-    <div class="login_container">
-        <div class="login_form">
-            <h2>登陆账号</h2>
-            <div class="form-group">
-                <label for="loginUsername">用户名:</label>
-                <input type="text" v-model="username" required />
-            </div>
-            <div v-show="!islogin" class="form-group">
-                <label for="registerEmail">邮箱:</label>
-                <input type="email" v-model="email" required />
-            </div>
-            <div class="form-group">
-                <label for="loginPassword">密码:</label>
-                <input type="password" v-model="password" required />
-            </div>
-            <div class="form-group">
-                <button @click="reg_or_login" type="submit" v-text="button_text"></button>
-            </div>
-            <div class="toggle-link">
-                <p><a v-text="text_info_prefix"></a><a @click="toreg_or_login" class="login_text_button">{{ text_info
-                        }}</a></p>
-            </div>
-        </div>
-    </div>
-</template>
-
-<script>
 import axios from 'axios';
 import { ref } from 'vue';
 
@@ -125,7 +97,3 @@ export default {
         }
     }
 };
-</script>
-
-<style scoped src="@/assets/css/loginpage.css">
-</style>
