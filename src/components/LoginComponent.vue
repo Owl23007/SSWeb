@@ -13,8 +13,11 @@
             <div class="form-group">
                 <button type="submit">登录</button>
             </div>
+            <div class="toggle-link">
+                <p id="toggleText">还没有账号？<a @click="toRegisterForm" id="toggleForm">注册</a></p>
+            </div>
         </form>
-        <form id="registerForm" style="display: none">
+        <form @invalid="loadPage" id="registerForm" style="display: none">
             <div class="form-group">
                 <label for="registerUsername">用户名:</label>
                 <input type="text" id="registerUsername" name="username" required />
@@ -28,18 +31,52 @@
                 <input type="password" id="registerPassword" name="password" required />
             </div>
             <div class="form-group">
-                <button type="submit">注册</button>
+                <button @click="register" type="submit">注册</button>
+            </div>
+            <div class="toggle-link">
+                <p id="toggleText">已经有账号？<a @click="loadPage" id="toggleForm">登陆</a></p>
             </div>
         </form>
-        <div class="toggle-link">
-            <p id="toggleText">还没有账号？ <a href="#" id="toggleForm">注册</a></p>
-        </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'LoginComponent'
+    name: 'LoginComponent',
+    setup() {
+        const toRegisterForm = () => {
+            const regFrom = document.getElementById('registerForm');
+            const loginFrom = document.getElementById('loginForm');
+            const formTitle = document.getElementById('formTitle');
+
+            regFrom.style.display = 'block';
+            loginFrom.style.display = 'none';
+            formTitle.innerHTML = '注册';
+        }
+        const loadPage = () => {
+            const regFrom = document.getElementById('registerForm');
+            const loginFrom = document.getElementById('loginForm');
+            const formTitle = document.getElementById('formTitle');
+
+            regFrom.style.display = 'none';
+            loginFrom.style.display = 'block';
+            formTitle.innerHTML = '登录';
+        }
+        const register = () => {
+            const regEmail = document.getElementById('registerEmail');
+            const regUsername = document.getElementById('registerUsername');
+            const regPassword = document.getElementById('registerPassword');
+
+            if (regEmail.value === '' || regUsername.value === '' || regPassword.value === '') {
+               alert('请填写完整的注册信息');
+            }
+
+            //下面写注册
+        }
+        return {
+            toRegisterForm, loadPage , register
+        }
+    }
 };
 </script>
 
@@ -60,10 +97,10 @@ template {
     background-color: #fff;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    display: grid;
 }
 
 .form-group {
