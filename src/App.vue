@@ -14,7 +14,7 @@
           <ul>
             <li>
               <div class="header_button">
-                <a href="#">主页</a>
+                <router-link to="/">主页</router-link>
               </div>
             </li>
             <li>

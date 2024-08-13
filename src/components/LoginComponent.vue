@@ -1,106 +1,147 @@
 <template>
-    <div class="container">
-        <h2 id="formTitle">登录</h2>
-        <form id="loginForm">
+    <div class="login_container">
+        <div class="login_form">
+            <h2>登陆账号</h2>
             <div class="form-group">
                 <label for="loginUsername">用户名:</label>
-                <input type="text" id="loginUsername" name="username" required />
+                <input type="text" v-model="username" required />
+            </div>
+            <div v-show="!islogin" class="form-group">
+                <label for="registerEmail">邮箱:</label>
+                <input type="email" v-model="email" required />
             </div>
             <div class="form-group">
                 <label for="loginPassword">密码:</label>
-                <input type="password" id="loginPassword" name="password" required />
+                <input type="password" v-model="password" required />
             </div>
             <div class="form-group">
-                <button type="submit">登录</button>
+                <button @click="reg_or_login" type="submit" v-text="button_text"></button>
             </div>
             <div class="toggle-link">
-                <p id="toggleText">还没有账号？<a @click="toRegisterForm" id="toggleForm">注册</a></p>
+                <p><a v-text="text_info_prefix"></a><a @click="toreg_or_login" class="login_text_button">{{ text_info
+                        }}</a></p>
             </div>
-        </form>
-        <form @invalid="loadPage" id="registerForm" style="display: none">
-            <div class="form-group">
-                <label for="registerUsername">用户名:</label>
-                <input type="text" id="registerUsername" name="username" required />
-            </div>
-            <div class="form-group">
-                <label for="registerEmail">邮箱:</label>
-                <input type="email" id="registerEmail" name="email" required />
-            </div>
-            <div class="form-group">
-                <label for="registerPassword">密码:</label>
-                <input type="password" id="registerPassword" name="password" required />
-            </div>
-            <div class="form-group">
-                <button @click="register" type="submit">注册</button>
-            </div>
-            <div class="toggle-link">
-                <p id="toggleText">已经有账号？<a @click="loadPage" id="toggleForm">登陆</a></p>
-            </div>
-        </form>
+        </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+import { ref } from 'vue';
+
 export default {
     name: 'LoginComponent',
     setup() {
-        const toRegisterForm = () => {
-            const regFrom = document.getElementById('registerForm');
-            const loginFrom = document.getElementById('loginForm');
-            const formTitle = document.getElementById('formTitle');
-
-            regFrom.style.display = 'block';
-            loginFrom.style.display = 'none';
-            formTitle.innerHTML = '注册';
+        const username = ref('');
+        const password = ref('');
+        const email = ref('');
+        const button_text = ref('登陆')
+        const islogin = ref(true);
+        const text_info_prefix = ref('还没有账号？');
+        const text_info = ref('注册');
+        const toreg_or_login = () => {
+            if (islogin.value) {
+                //相当于点了蓝色注册小字
+                islogin.value = false;
+                text_info_prefix.value = '已有账号？';
+                text_info.value = '登陆';
+                button_text.value = '注册';
+                username.value = "";
+                password.value = "";
+                email.value = "";
+                return;
+            }
+            //相当于点击了蓝色登陆小字
+            islogin.value = true;
+            text_info_prefix.value = '还没有账号？';
+            text_info.value = '注册';
+            button_text.value = '登陆';
         }
-        const loadPage = () => {
-            const regFrom = document.getElementById('registerForm');
-            const loginFrom = document.getElementById('loginForm');
-            const formTitle = document.getElementById('formTitle');
-
-            regFrom.style.display = 'none';
-            loginFrom.style.display = 'block';
-            formTitle.innerHTML = '登录';
+        const register_request = async (username, password, email) => {
+            const res = await axios({
+                url: 'http://localhost:8080/api/register',//请求地址
+                method: 'post',//请求方式
+                data: {//请求参数
+                    username: username,
+                    password: password,
+                    email: email
+                },
+            })
+            return res;
         }
-        const register = () => {
-            const regEmail = document.getElementById('registerEmail');
-            const regUsername = document.getElementById('registerUsername');
-            const regPassword = document.getElementById('registerPassword');
-
-            if (regEmail.value === '' || regUsername.value === '' || regPassword.value === '') {
-               alert('请填写完整的注册信息');
+        const login_request = async (username, password) => {
+            const res = await axios({
+                url: 'http://localhost:8080/api/login',//请求地址
+                method: 'post',//请求方式
+                data: {//请求参数
+                    username: username,
+                    password: password
+                },
+            })
+            return res;
+        }
+        const reg_or_login = async () => {
+            if (islogin.value) {
+                if (username.value == '' || password.value == '') {
+                    console.log("输入不能为空。");
+                    return;
+                }
+                //下面写登录
+                const res = await login_request(username.value, password.value);
+                //后端回复的消息
+                if (res['data']['status'] == 'success') {
+                    console.log("登录成功。");
+                    //导航到主页
+                    window.location.href = "/";
+                } else {
+                    console.log(res['data']['message']);
+                }
+                return;
+            }
+            if (email.value == '' || username.value == '' || password.value == '') {
+                console.log("输入不能为空。");
+                return;
             }
 
-            //下面写注册
+            //下面写注册(未加密)
+            const res = await register_request(username.value, password.value, email.value);
+
+            //后端回复的消息
+            if (res['data']['status'] == 'success') {
+                username.value = "";
+                password.value = "";
+                email.value = "";
+                islogin.value = true;
+                text_info_prefix.value = '还没有账号？';
+                text_info.value = '注册';
+                button_text.value = '登陆';
+                console.log("注册成功。");
+            }
+            else
+                console.log(res['data']['message']);
         }
         return {
-            toRegisterForm, loadPage , register
+            reg_or_login, toreg_or_login, text_info_prefix, text_info, button_text, islogin, password, email, username
         }
     }
 };
 </script>
 
 <style>
-template {
-    background-color: #f6f8fa;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+.login_container {
+    max-width: 40%;
+    height: 100px;
+    margin: 0 auto;
+    text-align: center;
+    /* 顶格 */
+    margin-top: 100px;
 }
 
-.container {
-    max-width: 400px;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    display: grid;
+.login_form {
+    background-color: #fffdfd;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 .form-group {
@@ -115,7 +156,7 @@ template {
 }
 
 .form-group input {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -140,12 +181,12 @@ template {
     margin-top: 20px;
 }
 
-.toggle-link a {
+.login_text_button {
     color: #0366d6;
     text-decoration: none;
 }
 
-.toggle-link a:hover {
+.login_text_button:hover {
     text-decoration: underline;
 }
 </style>
