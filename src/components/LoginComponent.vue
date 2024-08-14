@@ -5,7 +5,7 @@
                 <a>{{ button_text }}页面</a>
             </div>
             <div class="form-group">
-                    <label for="loginUsername">用户名:</label>
+                <label for="loginUsername">用户名:</label>
                 <div class="input_box">
                     <input type="text" v-model="username" required />
                 </div>
@@ -38,24 +38,25 @@
 <script>
 import { ref } from 'vue';
 import { register_request, login_request } from "../assets/script/request.js";
+import { login_status } from "../assets/script/loginstatus.js";
 
 export default {
     name: 'LoginComponent',
     setup() {
-        //输入框的值
+        // 输入框的值
         const username = ref('');
         const password = ref('');
         const email = ref('');
-        //显示的文字
+        // 显示的文字
         const button_text = ref('登陆')
         const text_info_prefix = ref('还没有账号？');
         const text_info = ref('注册');
-        //当前页面状态
+        // 当前页面状态
         const islogin = ref(true);
 
         const toreg_or_login = () => {
             if (islogin.value) {
-                //相当于点了蓝色注册小字
+                // 相当于点了蓝色注册小字
                 islogin.value = false;
                 text_info_prefix.value = '已有账号？';
                 text_info.value = '登陆';
@@ -65,28 +66,28 @@ export default {
                 email.value = "";
                 return;
             }
-            //相当于点击了蓝色登陆小字
+            // 相当于点击了蓝色登陆小字
             islogin.value = true;
             text_info_prefix.value = '还没有账号？';
             text_info.value = '注册';
             button_text.value = '登陆';
-        }     
+        }
         const reg_or_login = async () => {
             if (islogin.value) {
                 if (username.value == '' || password.value == '') {
                     console.log("输入不能为空。");
                     return;
                 }
-                //下面写登录
+                // 下面写登录(未加密)
+
                 try {
                     const res = await login_request(username.value, password.value);
-                    //后端回复的消息
+                    // 后端回复的消息
                     if (res['data']['status'] == 'success') {
                         console.log("登录成功。");
-                        //导航到主页
-
-                        //请求一些信息来显示
-
+                        // 设置登陆状态
+                        login_status.value.login(res['data']['username'], res['data']['email'], res['data']['token'])
+                        // 导航到主页
                         window.location.href = "/";
                     } else {
                         alert(res['data']['message']);
@@ -106,7 +107,7 @@ export default {
                 return;
             }
 
-            //下面写注册(未加密)
+            // 下面写注册(未加密)
             try {
                 const res = await register_request(username.value, password.value, email.value);
                 if (res['data']['status'] == 'success') {

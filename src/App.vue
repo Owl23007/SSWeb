@@ -57,12 +57,21 @@
 </template>
 
 <script>
-const test = 1;
+import { onMounted, ref } from 'vue';
+import { login_status } from "./assets/script/loginstatus.ts";
 export default {
   name: 'App',
   setup() {
+    // 存储账号信息的变量
+    // const touxiang_url = ref(''); //头像不会拼
+    // 更多的写在后面,或者所有的内容都集成到loginstatus类中
+
+    onMounted(async () => {
+      // 请求账号信息写在这里
+      // 然后调用loginstatus类中login的方法将信息存储到变量中
+      login_status.value.login("用户名", "邮箱", "令牌");
+    })
     return {
-      test
     };
   }
 };
@@ -95,10 +104,11 @@ export default {
   width: 60%;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   height: 100%;
 }
-.nav_title span{
+
+.nav_title span {
   color: #ffffff;
   font-size: 20px;
 }

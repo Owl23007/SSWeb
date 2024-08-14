@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 async function request_add_text(text_content, text_title, name) {
     const res = await axios({
