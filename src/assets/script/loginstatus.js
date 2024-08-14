@@ -2,25 +2,23 @@ import {ref} from 'vue';
 
 class LoginStatus
 {
-	public username: string;
-    public email: string;
-    public token: string;
-	public is_login: boolean;
-
-    constructor()
-    {
+	username = ref("");
+    email= ref("") ;
+    token= ref("") ;
+	is_login= ref(false) ;
+    constructor(){
         this.username = "";
         this.email = "";
         this.token = "";
         this.is_login = false;
     }
-    public logout(){
+     async logout(){
         this.username = "";
         this.email = "";
         this.token = "";
         this.is_login = false;
     }
-    public login(username: string, email: string, token: string){
+    async login(username, email, token){
         this.username = username;
         this.email = email;
         this.token = token;

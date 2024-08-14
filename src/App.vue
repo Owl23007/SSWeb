@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
-import { login_status } from "./assets/script/loginstatus.ts";
+import { onMounted} from 'vue';
+import { login_status } from "./assets/script/loginstatus.js";
 export default {
   name: 'App',
   setup() {
