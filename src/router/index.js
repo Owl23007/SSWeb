@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import loginPage from '../components/LoginComponent.vue'
 import homePage from '../components/Home.vue'
+import textPage from '../components/Text.vue'
 
 const routes = [
   {
@@ -12,8 +13,16 @@ const routes = [
     }
   },
   {
+    path: '/text',
+    name: 'textPage',
+    component: textPage,
+    meta:{
+      title: '文章'
+    }
+  },
+  {
     path: '/',
-    name: 'HomePage',
+    name: 'homePage',
     component: homePage,
     meta:{
       title: '首页'

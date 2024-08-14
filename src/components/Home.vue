@@ -14,7 +14,7 @@
 
 <script>
 export default {
-    name: 'HomePage',
+    name: 'homePage',
 };
 </script>
 

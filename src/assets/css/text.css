@@ -1,0 +1,5 @@
+.text_container{
+    /* 其下元素居中 */
+    display: flex;
+    justify-content: center;
+}

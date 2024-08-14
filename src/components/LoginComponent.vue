@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { ref } from 'vue';
+import { register_request, login_request } from "../assets/script/request.js";
 
 export default {
     name: 'LoginComponent',
@@ -70,33 +70,7 @@ export default {
             text_info_prefix.value = '还没有账号？';
             text_info.value = '注册';
             button_text.value = '登陆';
-        }
-
-        const register_request = async (username, password, email) => {
-            const res = await axios({
-                url: 'http://localhost:8080/api/register',//请求地址
-                method: 'post',//请求方式
-                data: {//请求参数
-                    username: username,
-                    password: password,
-                    email: email
-                },
-            })
-            return res;
-        }
-
-        const login_request = async (username, password) => {
-            const res = await axios({
-                url: 'http://localhost:8080/api/login',//请求地址
-                method: 'post',//请求方式
-                data: {//请求参数
-                    username: username,
-                    password: password
-                },
-            })
-            return res;
-        }
-
+        }     
         const reg_or_login = async () => {
             if (islogin.value) {
                 if (username.value == '' || password.value == '') {

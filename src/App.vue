@@ -26,7 +26,7 @@
             </li>
             <li>
               <div class="header_button">
-                <router-link to="/">文章</router-link>
+                <router-link to="/text">文章</router-link>
               </div>
             </li>
             <li>
