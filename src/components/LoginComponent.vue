@@ -1,25 +1,35 @@
 <template>
-    <div @class="login_container">
+    <div class="login_container">
         <div class="login_form">
-            <h2>登陆账号</h2>
+            <div class="title_text">
+                <a>{{ button_text }}页面</a>
+            </div>
             <div class="form-group">
-                <label for="loginUsername">用户名:</label>
-                <input type="text" v-model="username" required />
+                    <label for="loginUsername">用户名:</label>
+                <div class="input_box">
+                    <input type="text" v-model="username" required />
+                </div>
             </div>
             <div v-show="!islogin" class="form-group">
                 <label for="registerEmail">邮箱:</label>
-                <input type="email" v-model="email" required />
+                <div class="input_box">
+                    <input type="email" v-model="email" required />
+                </div>
             </div>
             <div class="form-group">
                 <label for="loginPassword">密码:</label>
-                <input type="password" v-model="password" required />
+                <div class="input_box">
+                    <input type="password" v-model="password" required />
+                </div>
             </div>
             <div class="form-group">
                 <button @click="reg_or_login" type="submit" v-text="button_text"></button>
             </div>
             <div class="toggle-link">
-                <p><a v-text="text_info_prefix"></a><a @click="toreg_or_login" class="login_text_button">{{ text_info
-                        }}</a></p>
+                <p>
+                    <a>{{ text_info_prefix }}</a>
+                    <a @click="toreg_or_login" class="login_text_button">{{ text_info }}</a>
+                </p>
             </div>
         </div>
     </div>
@@ -36,11 +46,12 @@ export default {
         const username = ref('');
         const password = ref('');
         const email = ref('');
-        //显示的按钮文字
+        //显示的文字
         const button_text = ref('登陆')
-        const islogin = ref(true);
         const text_info_prefix = ref('还没有账号？');
         const text_info = ref('注册');
+        //当前页面状态
+        const islogin = ref(true);
 
         const toreg_or_login = () => {
             if (islogin.value) {
