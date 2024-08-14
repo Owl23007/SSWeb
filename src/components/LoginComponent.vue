@@ -32,13 +32,16 @@ import { ref } from 'vue';
 export default {
     name: 'LoginComponent',
     setup() {
+        //输入框的值
         const username = ref('');
         const password = ref('');
         const email = ref('');
+        //显示的按钮文字
         const button_text = ref('登陆')
         const islogin = ref(true);
         const text_info_prefix = ref('还没有账号？');
         const text_info = ref('注册');
+
         const toreg_or_login = () => {
             if (islogin.value) {
                 //相当于点了蓝色注册小字
@@ -57,6 +60,7 @@ export default {
             text_info.value = '注册';
             button_text.value = '登陆';
         }
+
         const register_request = async (username, password, email) => {
             const res = await axios({
                 url: 'http://localhost:8080/api/register',//请求地址
@@ -69,6 +73,7 @@ export default {
             })
             return res;
         }
+
         const login_request = async (username, password) => {
             const res = await axios({
                 url: 'http://localhost:8080/api/login',//请求地址
@@ -80,6 +85,7 @@ export default {
             })
             return res;
         }
+
         const reg_or_login = async () => {
             if (islogin.value) {
                 if (username.value == '' || password.value == '') {
@@ -137,6 +143,7 @@ export default {
                 return;
             }
         }
+
         return {
             reg_or_login, toreg_or_login, text_info_prefix, text_info, button_text, islogin, password, email, username
         }
