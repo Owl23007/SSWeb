@@ -1,51 +1,48 @@
 import axios from 'axios';
 
-async function request_add_text(text_content, text_title, name) {
-    const res = await axios({
-        url: 'http://localhost:8080/api/addtext',//请求地址
-        method: 'post',//请求方式
-        data: {//请求参数
-            Text_content: text_content,
-            Text_title: text_title,
-            username: name
-        },
-    })
-    return res;
-}
-async function request_text_list() {
-    const res = await axios({
-        url: 'http://localhost:8080/api/gettext',
-        method: 'post',
-        data: {//请求参数
-            Text_time: 123456
-        },
-    })
-    return res;
-}
+const instance = axios.create({
+    baseURL: 'http://localhost:8080',
+    timeout: 1000,
+    headers: {'X-Custom-Header': 'foobar'}
+});
 
-async function register_request(username, password, email) {
-    const res = await axios({
-        url: 'http://localhost:8080/api/register',//请求地址
-        method: 'post',//请求方式
-        data: {//请求参数
-            username: username,
-            password: password,
-            email: email
-        },
-    })
-    return res;
-}
+export const register_request = async (data) => {
+    try {
+        const response = await instance.post('/api/register', data);
+        return response.data;
+    } catch (error) {
+        console.error('Error during registration:', error);
+        throw error;
+    }
+};
 
-async function login_request(username, password) {
-    const res = await axios({
-        url: 'http://localhost:8080/api/login',//请求地址
-        method: 'post',//请求方式
-        data: {//请求参数
-            username: username,
-            password: password
-        },
-    })
-    return res;
-}
+export const login_request = async (data) => {
+    try {
+        const response = await instance.post('/api/login', data);
+        return response.data;
+    } catch (error) {
+        console.error('Error during login:', error);
+        throw error;
+    }
+};
 
-export { request_text_list, request_add_text, register_request, login_request }
+// 添加缺失的函数
+export const request_text_list = async () => {
+    try {
+        const response = await instance.get('/api/texts');
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching text list:', error);
+        throw error;
+    }
+};
+
+export const request_add_text = async (data) => {
+    try {
+        const response = await instance.post('/api/texts', data);
+        return response.data;
+    } catch (error) {
+        console.error('Error adding text:', error);
+        throw error;
+    }
+};
