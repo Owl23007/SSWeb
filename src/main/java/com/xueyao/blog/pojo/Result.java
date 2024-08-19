@@ -17,7 +17,6 @@ public class Result<T> {
         return new Result<E>(0, "success", data);
     }
 
-
     // 返回响应结果
     public static Result success() {
         return new Result(0, "success", null);
