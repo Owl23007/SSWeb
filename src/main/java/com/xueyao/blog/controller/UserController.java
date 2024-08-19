@@ -17,12 +17,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public Result onRegister(String username, String password, String email){
-        //查询用户
+    public Result onRegister(String username, String password){
+        // 检查用户是否已存在
         User u = userService.getUserByUsername(username);
         if(u==null){
             return Result.error("用户名已存在");
         }
+        // 注册
         userService.register(username,password);
         return Result.success();
     }
