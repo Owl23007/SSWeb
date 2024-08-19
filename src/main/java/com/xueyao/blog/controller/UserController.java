@@ -20,7 +20,7 @@ public class UserController {
     public Result onRegister(String username, String password){
         // 检查用户是否已存在
         User u = userService.getUserByUsername(username);
-        if(u==null){
+        if(u!=null){
             return Result.error("用户名已存在");
         }
         // 注册
