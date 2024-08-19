@@ -6,13 +6,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
+// Web配置类
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    // 注入拦截器
     @Autowired
     private LoginInterceptor loginInterceptor;
 
+    // 添加拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 将拦截器注册到容器中
