@@ -5,6 +5,10 @@ import textPage from '../components/Text.vue'
 
 const routes = [
   {
+    path: '/',
+    redirect: '/home' // 设置重定向到 /home
+  },
+  {
     path: '/login',
     name: 'loginPage',
     component: loginPage,
