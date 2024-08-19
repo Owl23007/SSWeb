@@ -4,7 +4,7 @@ package com.xueyao.blog.controller;
 import com.xueyao.blog.pojo.Result;
 import com.xueyao.blog.pojo.User;
 import com.xueyao.blog.utils.JwtUtil;
-import com.xueyao.blog.utils.RSA;
+import com.xueyao.blog.utils.RsaUtil;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -44,7 +44,7 @@ public class UserController {
             return Result.error("用户名不存在");
         }
         // 判断密码是否正确
-        if (RSA.getRSA(password).equals(LoginUser.getPassword())){
+        if (RsaUtil.getRSA(password).equals(LoginUser.getPassword())){
             // 登陆成功返回Token
             Map<String,Object> claims = new HashMap<>();
             claims.put("id",LoginUser.getId());
