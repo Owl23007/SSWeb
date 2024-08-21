@@ -4,6 +4,7 @@ import com.xueyao.blog.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface UserMapper {
@@ -14,4 +15,8 @@ public interface UserMapper {
     // 查询用户
     @Select("select * from user where username = #{username}")
     User getUserByUsername(String username);
+
+    // 更新用户
+    @Update("update user set email = #{email}, nickname = #{nickname}, update_time = now() where id = #{id}")
+    void update(User user);
 }

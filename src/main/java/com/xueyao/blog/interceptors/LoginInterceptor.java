@@ -1,6 +1,7 @@
 package com.xueyao.blog.interceptors;
 
 import com.xueyao.blog.utils.JwtUtil;
+import com.xueyao.blog.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 令牌验证
         String token = request.getHeader("Authorization");
         try{
+            // 解析token
             Map<String, Object> claims = JwtUtil.parseToken(token);
+            // 将token携带的信息存放在ThreadLocal中
+            // ThreadLocal是一个线程安全的Map，用于存储线程私有数据
+            // 每个线程中调用set、get方法都是独立的，不会互相干扰
+            ThreadLocalUtil.set(claims);
             // 放行
             return true;
         } catch (Exception e) {
@@ -25,5 +31,13 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.setStatus(401);
             return false;
         }
+    }
+
+    // 后置处理
+    // 删除ThreadLocal中的数据以防止内存泄漏
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        // 移除ThreadLocal中的数据
+        ThreadLocalUtil.remove();
     }
 }
