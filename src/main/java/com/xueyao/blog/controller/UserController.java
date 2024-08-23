@@ -8,6 +8,7 @@ import com.xueyao.blog.utils.RsaUtil;
 import com.xueyao.blog.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -80,7 +81,7 @@ public class UserController {
     }
 
     @PatchMapping("/updateAvatar")
-    public Result onUpdateAvatar(@RequestParam String url){
+    public Result onUpdateAvatar(@RequestParam @URL String url){
         // 更新用户头像
         userService.updateAvatar(url);
         return Result.success();
