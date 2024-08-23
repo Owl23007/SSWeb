@@ -23,4 +23,8 @@ public interface UserMapper {
     //更新用户头像
     @Update("update user set user_pic = #{url}, update_time = now() where id = #{id}")
     void updateAvatar(Integer id ,String url);
+
+    //更新用户密码
+    @Update("update user set password = #{rsaPassword}, update_time = now() where id = #{id}")
+    void updatePassword(Integer id ,String rsaPassword);
 }

@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.xueyao.blog.service.UserService;
@@ -80,10 +81,36 @@ public class UserController {
         return Result.success();
     }
 
+    // @RequestParam 将请求参数中的url封装到url中
+    // @URL 验证参数的合法性
     @PatchMapping("/updateAvatar")
     public Result onUpdateAvatar(@RequestParam @URL String url){
         // 更新用户头像
         userService.updateAvatar(url);
+        return Result.success();
+    }
+
+    @PatchMapping("/updatePwd")
+    public Result onUpdatePassword(@RequestBody Map<String,String> params){
+        // 校验参数
+        String old_pwd = params.get("old_pwd");
+        String new_pwd = params.get("new_pwd");
+        String re_pwd = params.get("re_pwd");
+        if (!StringUtils.hasLength(old_pwd) || !StringUtils.hasLength(new_pwd) || !StringUtils.hasLength(re_pwd)){
+            return Result.error("缺少参数。");
+        }
+        // 校验原密码是否正确
+        Map<String,Object> claims = ThreadLocalUtil.get();
+        User loginUser = userService.getUserByUsername((String) claims.get("username"));
+        if (!RsaUtil.getRSA(old_pwd).equals(loginUser.getPassword())){
+            return Result.error("原密码错误。");
+        }
+        // 校验两次密码是否一致
+        if (!new_pwd.equals(re_pwd)){
+            return Result.error("两次密码不一致。");
+        }
+        // 更新密码
+        userService.updatePassword(new_pwd);
         return Result.success();
     }
 }

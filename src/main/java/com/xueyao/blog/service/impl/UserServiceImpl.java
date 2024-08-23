@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
+        // 获取用户对象
         return userMapper.getUserByUsername(username);
     }
 
@@ -39,8 +40,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateAvatar(String url) {
+        // 获取用户id
         Map<String,Object> map = ThreadLocalUtil.get();
         Integer user_id = (Integer) map.get("id");
+        // 更新用户头像
         userMapper.updateAvatar(user_id, url);
+    }
+
+    @Override
+    public void updatePassword(String newPwd) {
+        // 加密密码
+        String RSAPassword = RsaUtil.getRSA(newPwd);
+        // 获取用户id
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer user_id = (Integer) map.get("id");
+        // 更新用户密码
+        userMapper.updatePassword(user_id, RSAPassword);
     }
 }
