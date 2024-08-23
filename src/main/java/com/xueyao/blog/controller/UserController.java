@@ -48,6 +48,7 @@ public class UserController {
         // 判断密码是否正确
         if (RsaUtil.getRSA(password).equals(LoginUser.getPassword())){
             // 登陆成功返回Token
+            // 封装claims
             Map<String,Object> claims = new HashMap<>();
             claims.put("id",LoginUser.getId());
             claims.put("username",LoginUser.getUsername());
