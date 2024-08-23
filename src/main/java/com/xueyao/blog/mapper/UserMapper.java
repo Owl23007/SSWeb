@@ -9,14 +9,18 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface UserMapper {
     // 注册
-    @Insert("insert into user(username, password,create_time,update_time) values(#{username}, #{password},now(),now())")
-    void add(String username, String password);
+    @Insert("insert into user(username, password,email,create_time,update_time) values(#{username}, #{password},now(),now())")
+    void add(String username,String email, String password);
 
     // 查询用户
     @Select("select * from user where username = #{username}")
     User getUserByUsername(String username);
 
     // 更新用户
-    @Update("update user set email = #{email}, nickname = #{nickname}, update_time = now() where id = #{id}")
+    @Update("update user set nickname = #{nickname}, update_time = #{updateTime} where id = #{id}")
     void update(User user);
+
+    //更新用户头像
+    @Update("update user set user_pic = #{url}, update_time = now() where id = #{id}")
+    void updateAvatar(Integer id ,String url);
 }

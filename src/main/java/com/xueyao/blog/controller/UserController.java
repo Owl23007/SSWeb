@@ -6,6 +6,7 @@ import com.xueyao.blog.pojo.User;
 import com.xueyao.blog.utils.JwtUtil;
 import com.xueyao.blog.utils.RsaUtil;
 import com.xueyao.blog.utils.ThreadLocalUtil;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -26,14 +27,14 @@ public class UserController {
 
     // @Pattern 验证参数的合法性
     @PostMapping("/register")
-    public Result onRegister(@Pattern(regexp = "^\\S{5,16}$") String username,@Pattern(regexp = "^\\S{5,16}$") String password){
+    public Result onRegister(@Pattern(regexp = "^\\S{5,16}$") String username,@Email String email, @Pattern(regexp = "^\\S{5,16}$") String password){
         // 检查用户是否已存在
         User u = userService.getUserByUsername(username);
         if(u!=null){
             return Result.error("用户名已存在");
         }
         // 注册
-        userService.register(username,password);
+        userService.register(username, email, password);
         return Result.success();
     }
 
@@ -70,10 +71,18 @@ public class UserController {
     }
 
     // @RequestBody 将请求体中的json数据封装到user对象中
+    // @Validated 根据实体类User验证请求参数的合法性
     @PutMapping("/update")
-    public Result<String> onUpdate(@RequestBody User user){
-        // 更新用户信息
+    public Result<String> onUpdate(@RequestBody @Validated User user){
+        // 更新用户基本信息
         userService.update(user);
+        return Result.success();
+    }
+
+    @PatchMapping("/updateAvatar")
+    public Result onUpdateAvatar(@RequestParam String url){
+        // 更新用户头像
+        userService.updateAvatar(url);
         return Result.success();
     }
 }
