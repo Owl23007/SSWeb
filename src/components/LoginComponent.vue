@@ -77,12 +77,6 @@ export default {
 
             // 如果当前是登陆操作
             if (islogin.value) {
-                // 检查输入是否为空
-                if (username.value === '' || password.value === '') {
-                    alert("输入不能为空。");
-                    return;
-                }
-
                 try {
                     // 调用登录请求函数
                     const res = await login_post(username.value, password.value);
@@ -90,31 +84,28 @@ export default {
                     // 判断是否登录成功
                     if (res.code === 0) {
                         alert("登录成功！");
-                        store.login(res.data); // 存储 JWT 并更新登录状态
+                        store.login(res.data);      // 存储 JWT 并更新登录状态
                         router.push('/home');       //跳转home
-                        return
+                        return;
                     }
                     // 登录失败
                     alert(res.message);
 
                 } catch (e) {
                     console.log(e);
-                    return
+                    return;
                 }
             }
 
             // 当前是注册操作
-            if (username.value === '' || password.value === '' || email.value === '') {
-                alert("输入不能为空。");
-                return;
-            }
+            // 调用注册请求函数
             try {
                 const res = await register_post(username.value, password.value, email.value);
                 // 注册成功
                 if (res.code === 0) {
                     // 切换到登陆页面
                     toreg_or_login();
-                    return
+                    return;
                 }
                 // 注册失败
                 alert(res.message);
