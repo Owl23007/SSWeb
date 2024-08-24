@@ -30,19 +30,16 @@
               </div>
             </li>
             <li>
-              <div class="header_button">
-                <router-link to="/login">登录</router-link>
+            <div class="header_button">
+              <router-link v-if="!isLoggedIn" to="/login">登录</router-link>
+              <div v-else class="dropdown">
+                <router-link to="/userinfo">个人主页</router-link>
+                <div class="dropdown-content">
+                  <a href="#" @click="logout">退出登录</a>
+                </div>
               </div>
-            </li>
-            <li class="dropdown">
-              <div class="header_button">
-                <a>更多</a>
-              </div>
-              <div class="dropdown-content">
-                <router-link to="/">联系我们</router-link>
-                <router-link to="/">其他</router-link>
-              </div>
-            </li>
+            </div>
+          </li>      
             <li style="display: none;">
               <img src="@/assets/default-avatar.png" alt="用户头像" style="height: 40px; border-radius: 50%;">
             </li>
@@ -57,7 +54,7 @@
 </template>
 
 <script>
-import { onMounted} from 'vue';
+import { onMounted } from 'vue';
 import { login_status } from "./assets/script/loginstatus.js";
 export default {
   name: 'App',

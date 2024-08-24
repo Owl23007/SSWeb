@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import loginPage from '../components/LoginComponent.vue'
 import homePage from '../components/Home.vue'
 import textPage from '../components/Text.vue'
+import UserInfo from '../components/UserInfo.vue'
 
 const routes = [
   {
@@ -22,6 +23,14 @@ const routes = [
     component: textPage,
     meta:{
       title: '文章'
+    }
+  },
+  {
+    path: '/userinfo',
+    name: 'userinfoPage',
+    component: UserInfo,
+    meta:{
+      title: '用户信息'
     }
   },
   {

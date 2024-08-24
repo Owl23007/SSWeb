@@ -14,13 +14,14 @@
                 <div v-show="!islogin" class="form-group">
                     <label for="registerEmail">邮箱:</label>
                     <div class="input_box">
-                        <input type="email" v-model="email" name="email" autocomplete="email" required />
+                        <input type="email" v-model="email" name="email" autocomplete="email"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">密码:</label>
                     <div class="input_box">
-                        <input type="password" v-model="password" name="password" autocomplete="current-password" required />
+                        <input type="password" v-model="password" name="password" autocomplete="current-password"
+                            required />
                     </div>
                 </div>
                 <div class="form-group">
@@ -33,9 +34,6 @@
                     <a @click="toreg_or_login" class="login_text_button">{{ text_info }}</a>
                 </p>
             </div>
-            <div class="test-link">
-                <button @click="test_request">Test 请求</button>
-            </div>
         </div>
     </div>
 </template>
@@ -43,6 +41,9 @@
 <script>
 import { ref } from 'vue';
 import axios from 'axios';
+import store from '../store/index.js';
+import router from '../router/index.js';
+
 
 export default {
     name: 'LoginComponent',
@@ -50,10 +51,11 @@ export default {
         const username = ref('');
         const password = ref('');
         const email = ref('');
-        const islogin = ref(true); 
+        const islogin = ref(true);
         const text_info_prefix = ref('还没有账号？');
         const text_info = ref('注册');
         const button_text = ref('登陆');
+   
 
         const login_request = async (credentials) => {
             try {
@@ -70,53 +72,52 @@ export default {
         };
 
         const register_request = async (credentials) => {
-      try {
-        
-        const res = await axios.post('http://localhost:8080/user/register', credentials, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        console.log(res.data);
-        return res.data;
-      } catch (e) {
-        console.log(e);
-        return { status: 'error', message: '注册请求失败' };
-      }
-    };
+            try {
 
-    const handleSubmit = async () => {
-      const credentials = {
-        username: username.value,
-        password: password.value,
-        email: email.value
-      };
+                const res = await axios.post('http://localhost:8080/user/register', credentials, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                return res.data;
+            } catch (e) {
+                console.log(e);
+                return { status: 'error', message: '注册请求失败' };
+            }
+        };
 
-      if (!credentials.username || !credentials.password || (!islogin.value && !credentials.email)) {
-        alert('请填写所有必填字段');
-        return;
-      }
+        const handleSubmit = async () => {
+            const credentials = {
+                username: username.value,
+                password: password.value,
+                email: email.value
+            };
 
-      let response;
-      if (islogin.value) {
-        response = await login_request(credentials);
-      } else {
-        response = await register_request(credentials);
-      }
+            if (!credentials.username || !credentials.password || (!islogin.value && !credentials.email)) {
+                alert('请填写所有必填字段');
+                return;
+            }
 
-      if (response.status === 'success') {
-        console.log(islogin.value ? '登录成功' : '注册成功');
-        if (!islogin.value) {
-          islogin.value = true;
-          text_info_prefix.value = '还没有账号？';
-          text_info.value = '注册';
-          button_text.value = '登陆';
-        }
-      } else {
-        alert(response.message);
-        console.log(response.message);
-      }
-    };
+            let response;
+            if (islogin.value) {
+                response = await login_request(credentials);
+            } else {
+                response = await register_request(credentials);
+            }
+
+            if (response.status === 'success') {
+                console.log(islogin.value ? '登录成功' : '注册成功');                
+                if (!islogin.value) {
+                    islogin.value = true;
+                    text_info_prefix.value = '还没有账号？';
+                    text_info.value = '注册';
+                    button_text.value = '登陆';
+                }
+            } else {
+                alert(response.message);
+                console.log(response.message);
+            }
+        };
 
 
         const reg_or_login = async () => {
@@ -128,11 +129,14 @@ export default {
                 try {
                     const res = await login_request({
                         username: username.value,
-                        password: password.value
+                        password: password.value 
                     });
                     if (res.status === 'success') {
                         console.log("登录成功。");
-                        window.location.href = "/home";
+                        islogin.value = true;      
+                        store.login(res.token); // 存储 JWT 并更新登录状态
+                      
+                        router.push('/');       //跳转home          
                     } else {
                         alert(res.message);
                         console.log(res.message);
@@ -167,16 +171,6 @@ export default {
             }
         };
 
-        const test_request = () => {
-            axios.get('http://localhost:8080/user/test')
-                .then(response => {
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.log("Test 请求失败：", error);
-                });
-        };
-
         const toreg_or_login = () => {
             islogin.value = !islogin.value;
             if (islogin.value) {
@@ -191,17 +185,16 @@ export default {
         };
 
         return {
-            reg_or_login, 
+            reg_or_login,
             toreg_or_login,
-             text_info_prefix, 
-             text_info, 
-             button_text, 
-             islogin, 
-             password,
-              email,
-               username, 
-               test_request,
-               handleSubmit
+            text_info_prefix,
+            text_info,
+            button_text,
+            islogin,
+            password,
+            email,
+            username,
+            handleSubmit
         };
     }
 };
