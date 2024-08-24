@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface UserMapper {
     // 注册
-    @Insert("insert into user(username, password,email,create_time,update_time) values(#{username}, #{password},now(),now())")
-    void add(String username,String email, String password);
+    @Insert("insert into user(username, password, email, create_time, update_time) values(#{username}, #{password}, #{email}, now(), now())")
+    void add(String username, String email, String password);
 
     // 查询用户
     @Select("select * from user where username = #{username}")
