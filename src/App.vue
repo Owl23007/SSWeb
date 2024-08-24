@@ -26,7 +26,7 @@
             </li>
             <li>
               <div class="header_button">
-                <router-link to="/text">文章</router-link>
+                <router-link to="/article">文章</router-link>
               </div>
             </li>
             <li>
@@ -55,18 +55,12 @@
 
 <script>
 import { onMounted } from 'vue';
-import { login_status } from "./assets/script/loginstatus.js";
 export default {
   name: 'App',
   setup() {
-    // 存储账号信息的变量
-    // const touxiang_url = ref(''); //头像不会拼
-    // 更多的写在后面,或者所有的内容都集成到loginstatus类中
 
+    // 在载入页面时调用
     onMounted(async () => {
-      // 请求账号信息写在这里
-      // 然后调用loginstatus类中login的方法将信息存储到变量中
-      login_status.value.login("用户名", "邮箱", "令牌");
     })
     return {
     };

@@ -1,0 +1,31 @@
+.article-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .article-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .article-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .article-content {
+    text-align: center;
+  }
+  
+  .empty-state {
+    width: 100%;
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+    color: #888;
+  }
