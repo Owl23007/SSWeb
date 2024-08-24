@@ -14,7 +14,7 @@
                 <div v-show="!islogin" class="form-group">
                     <label for="registerEmail">邮箱:</label>
                     <div class="input_box">
-                        <input type="email" v-model="email" name="email" autocomplete="email"/>
+                        <input type="email" v-model="email" name="email" autocomplete="email" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -40,147 +40,86 @@
 
 <script>
 import { ref } from 'vue';
-import axios from 'axios';
 import store from '../store/index.js';
 import router from '../router/index.js';
+import { login_post, register_post } from '../assets/script/login_request.js';
 
 
 export default {
     name: 'LoginComponent',
     setup() {
+        // 存储输入框的内容
         const username = ref('');
         const password = ref('');
         const email = ref('');
+        // 存储页面信息
         const islogin = ref(true);
         const text_info_prefix = ref('还没有账号？');
         const text_info = ref('注册');
         const button_text = ref('登陆');
-   
 
-        const login_request = async (credentials) => {
-            try {
-                const res = await axios.post('http://localhost:8080/user/login', credentials, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                return res.data;
-            } catch (e) {
-                console.log(e);
-                return { status: 'error', message: '登录请求失败' };
-            }
-        };
-
-        const register_request = async (credentials) => {
-            try {
-
-                const res = await axios.post('http://localhost:8080/user/register', credentials, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                return res.data;
-            } catch (e) {
-                console.log(e);
-                return { status: 'error', message: '注册请求失败' };
-            }
-        };
-
-        const handleSubmit = async () => {
-            const credentials = {
-                username: username.value,
-                password: password.value,
-                email: email.value
-            };
-
-            if (!credentials.username || !credentials.password || (!islogin.value && !credentials.email)) {
-                alert('请填写所有必填字段');
-                return;
-            }
-
-            let response;
-            if (islogin.value) {
-                response = await login_request(credentials);
-            } else {
-                response = await register_request(credentials);
-            }
-
-            if (response.status === 'success') {
-                console.log(islogin.value ? '登录成功' : '注册成功');                
-                if (!islogin.value) {
-                    islogin.value = true;
-                    text_info_prefix.value = '还没有账号？';
-                    text_info.value = '注册';
-                    button_text.value = '登陆';
-                }
-            } else {
-                alert(response.message);
-                console.log(response.message);
-            }
-        };
-
-
-        const reg_or_login = async () => {
-            if (islogin.value) {
-                if (username.value === '' || password.value === '') {
-                    console.log("输入不能为空。");
-                    return;
-                }
-                try {
-                    const res = await login_request({
-                        username: username.value,
-                        password: password.value 
-                    });
-                    if (res.status === 'success') {
-                        console.log("登录成功。");
-                        islogin.value = true;      
-                        store.login(res.token); // 存储 JWT 并更新登录状态
-                      
-                        router.push('/');       //跳转home          
-                    } else {
-                        alert(res.message);
-                        console.log(res.message);
-                    }
-                } catch (e) {
-                    console.log(e);
-                }
-            } else {
-                if (username.value === '' || password.value === '' || email.value === '') {
-                    console.log("输入不能为空。");
-                    return;
-                }
-                try {
-                    const res = await register_request({
-                        username: username.value,
-                        password: password.value,
-                        email: email.value
-                    });
-                    if (res.status === 'success') {
-                        console.log("注册成功。");
-                        islogin.value = true;
-                        text_info_prefix.value = '还没有账号？';
-                        text_info.value = '注册';
-                        button_text.value = '登陆';
-                    } else {
-                        alert(res.message);
-                        console.log(res.message);
-                    }
-                } catch (e) {
-                    console.log(e);
-                }
-            }
-        };
-
+        // 切换注册和登录页面
         const toreg_or_login = () => {
             islogin.value = !islogin.value;
             if (islogin.value) {
                 text_info_prefix.value = '还没有账号？';
                 text_info.value = '注册';
                 button_text.value = '登陆';
-            } else {
-                text_info_prefix.value = '已有账号？';
-                text_info.value = '登陆';
-                button_text.value = '注册';
+                return
+            }
+            text_info_prefix.value = '已有账号？';
+            text_info.value = '登陆';
+            button_text.value = '注册';
+        };
+
+        // 当点击登录或注册按钮后调用
+        const reg_or_login = async () => {
+
+            // 如果当前是登陆操作
+            if (islogin.value) {
+                // 检查输入是否为空
+                if (username.value === '' || password.value === '') {
+                    alert("输入不能为空。");
+                    return;
+                }
+
+                try {
+                    // 调用登录请求函数
+                    const res = await login_post(username.value, password.value);
+
+                    // 判断是否登录成功
+                    if (res.code === 0) {
+                        alert("登录成功！");
+                        store.login(res.data); // 存储 JWT 并更新登录状态
+                        router.push('/home');       //跳转home
+                        return
+                    }
+                    // 登录失败
+                    alert(res.message);
+
+                } catch (e) {
+                    console.log(e);
+                    return
+                }
+            }
+
+            // 当前是注册操作
+            if (username.value === '' || password.value === '' || email.value === '') {
+                alert("输入不能为空。");
+                return;
+            }
+            try {
+                const res = await register_post(username.value, password.value, email.value);
+                // 注册成功
+                if (res.code === 0) {
+                    // 切换到登陆页面
+                    toreg_or_login();
+                    return
+                }
+                // 注册失败
+                alert(res.message);
+            } catch (e) {
+                console.log(e);
             }
         };
 
@@ -194,7 +133,6 @@ export default {
             password,
             email,
             username,
-            handleSubmit
         };
     }
 };

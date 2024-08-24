@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import loginPage from '../components/LoginComponent.vue'
 import homePage from '../components/Home.vue'
-import textPage from '../components/Text.vue'
 import UserInfo from '../components/UserInfo.vue'
+import ArticleList from '../components/ArticleList.vue'
 
 const routes = [
   {
@@ -18,9 +18,9 @@ const routes = [
     }
   },
   {
-    path: '/text',
-    name: 'textPage',
-    component: textPage,
+    path: '/article',
+    name: 'ArticleList',
+    component: ArticleList,
     meta:{
       title: '文章'
     }
