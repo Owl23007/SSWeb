@@ -40,7 +40,7 @@
               </div>
             </div>
           </li>      
-            <li style="display: none;">
+            <li>
               <img src="@/assets/default-avatar.png" alt="用户头像" style="height: 40px; border-radius: 50%;">
             </li>
           </ul>
