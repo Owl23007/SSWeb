@@ -29,7 +29,9 @@ public class UserController {
 
     // @Pattern 验证参数的合法性
     @PostMapping("/register")
-    public Result onRegister(@Pattern(regexp = "^\\S{5,16}$") String username, @Email String email, @Pattern(regexp = "^\\S{5,16}$") String password){
+    public Result onRegister(@Pattern(regexp = "^\\S{5,16}$") String username,
+                             @Email String email,
+                             @Pattern(regexp = "^\\S{5,16}$") String password){
         // 检查用户是否已存在
         User u = userService.getUserByUsername(username);
         if(u!=null){
@@ -113,4 +115,7 @@ public class UserController {
         userService.updatePassword(new_pwd);
         return Result.success();
     }
+
+
+
 }

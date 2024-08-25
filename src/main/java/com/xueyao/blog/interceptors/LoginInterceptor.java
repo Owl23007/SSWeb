@@ -14,15 +14,17 @@ import java.util.Map;
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // 令牌验证
+
         String token = request.getHeader("Authorization");
-        try{
+        if (token != null && token.startsWith("Duel ")) {
+            token = token.substring(5); // 去掉 "Duel " 前缀
+        }
+        try {
             // 解析token
             Map<String, Object> claims = JwtUtil.parseToken(token);
             // 将token携带的信息存放在ThreadLocal中
-            // ThreadLocal是一个线程安全的Map，用于存储线程私有数据
-            // 每个线程中调用set、get方法都是独立的，不会互相干扰
             ThreadLocalUtil.set(claims);
             // 放行
             return true;
@@ -32,7 +34,6 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
     }
-
     // 后置处理
     // 删除ThreadLocal中的数据以防止内存泄漏
     @Override

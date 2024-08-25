@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+
 
 // Web配置类
 @Configuration
@@ -22,4 +24,5 @@ public class WebConfig implements WebMvcConfigurer {
         // 如果有其他不需要拦截的接口，可以在这里添加
         registry.addInterceptor(loginInterceptor).excludePathPatterns("/user/login", "/user/register");
     }
+
 }
