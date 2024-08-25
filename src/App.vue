@@ -54,15 +54,34 @@
 </template>
 
 <script>
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+
 export default {
   name: 'App',
   setup() {
+    const store = useStore();
+    const router = useRouter();
+    const isLoggedIn = computed(() => store.state.isLoggedIn);
+
+    const logout = () => {
+      store.dispatch('logout');
+      router.push('/');
+    };
 
     // 在载入页面时调用
     onMounted(async () => {
-    })
+      if (isLoggedIn.value) {
+        await store.dispatch('fetchUserData');
+      } else {
+        router.push('/login');
+      }
+    });
+
     return {
+      isLoggedIn,
+      logout
     };
   }
 };

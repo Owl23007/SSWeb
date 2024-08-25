@@ -84,7 +84,8 @@ export default {
                     // 判断是否登录成功
                     if (res.code === 0) {
                         alert("登录成功！");
-                        store.login(res.data);      // 存储 JWT 并更新登录状态
+                        // 存储 JWT 并更新登录状态
+                        store.commit('login', res.data);                   
                         router.push('/home');       //跳转home
                         return;
                     }
@@ -100,10 +101,11 @@ export default {
             // 当前是注册操作
             // 调用注册请求函数
             try {
-                const res = await register_post(username.value, password.value, email.value);
+                const res = await register_post(username.value, email.value ,password.value);
                 // 注册成功
                 if (res.code === 0) {
                     // 切换到登陆页面
+                    alert("注册成功！");
                     toreg_or_login();
                     return;
                 }
@@ -121,9 +123,9 @@ export default {
             text_info,
             button_text,
             islogin,
-            password,
-            email,
             username,
+            email,
+            password,          
         };
     }
 };

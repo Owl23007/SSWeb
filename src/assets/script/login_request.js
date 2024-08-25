@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 export const register_post = async (username, email, password) => {
     if (username === '' || password === '' || email === '') {
         alert("请输入用户名、邮箱和密码。");
