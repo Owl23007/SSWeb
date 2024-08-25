@@ -46,11 +46,11 @@ const store = createStore({
           throw new Error('网络响应失败');
         }
 
-        const data = await response.json();
-        if (data.code === 0) {
-          commit('setUser', data.data);
+        const res= await response.json();
+        if (res.code === 0) {
+          commit('setUser', res.data);
         } else {
-          console.error('获取用户信息失败:', data.message);
+          console.error('获取用户信息失败:', res.message);
         }
       } catch (error) {
         console.error('获取用户信息失败:', error);
