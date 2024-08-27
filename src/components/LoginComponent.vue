@@ -94,8 +94,8 @@ export default {
 
                 } catch (e) {
                     console.log(e);
-                    return;
                 }
+                return;
             }
 
             // 当前是注册操作

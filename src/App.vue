@@ -174,7 +174,7 @@ body {
   border-right: none;
   border-radius: 10px 0 0 10px;
   width: 300px; /* 设置搜索输入框的宽度 */
- 
+  outline: none; /* 移除输入框的轮廓线 */
   font-size: 16px; /* 设置搜索输入框的字体大小 */
   height: 45px;
 }
