@@ -8,7 +8,8 @@ import store from '@/store'; // 假设你的 Vuex store 文件路径是 '@/store
 const routes = [
   {
     path: '/',
-    redirect: '/home' // 设置重定向到 /home
+    redirect: '/home',// 设置重定向到 /home
+    requiresAuth: false,
   },
   {
     path: '/login',
@@ -38,6 +39,7 @@ const routes = [
   {
     path: '/home',
     name: 'homePage',
+    requiresAuth: false,
     component: homePage,
     meta:{
       title: '首页'

@@ -1,6 +1,7 @@
 .login_container {
-    margin-top: 120px;
-    max-width: 40%;
+    margin: 0 auto;
+    padding-top:5% ;
+    max-width: 400px;
 }
 .title_text{
     /* 里面的元素居中显示 */
