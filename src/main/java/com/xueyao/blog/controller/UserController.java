@@ -18,6 +18,7 @@ import com.xueyao.blog.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/user")
@@ -53,7 +54,7 @@ public class UserController {
             return Result.error("用户名不存在");
         }
         // 判断密码是否正确
-        if (RsaUtil.getRSA(password).equals(LoginUser.getPassword())){
+        if (Objects.equals(RsaUtil.getRSA(password), LoginUser.getPassword())){
             // 登陆成功返回Token
             // 封装claims
             Map<String,Object> claims = new HashMap<>();
