@@ -26,3 +26,12 @@ export const login_post = async (username, password) => {
     });
     return response.data;
 };
+
+export const deleteAcc_post = async (token) => {
+    const response = await axios.delete('http://localhost:8080/user/deleteAcc', {
+        headers: {
+            'Authorization': `Duel ${token}`
+        }
+    });
+    return response.data;
+}

@@ -27,6 +27,9 @@
           <div class="info_menu_list_li" @click="logout">
             <li><a class="text_button">退出登陆</a></li>
           </div>
+          <div class="info_menu_list_li">
+            <li><a class="text_button" @click="delete_acc">注销账号</a></li>
+          </div>
         </ul>
       </div>
     </div>
@@ -35,16 +38,19 @@
       <from v-if="article">
         这是投稿页面
       </from>
+
       <!-- 草稿页面 -->
       <form v-if="draft">
         这是草稿页面
       </form>
+
       <!-- 稿件管理页面 -->
       <form v-if="manage">
         这是管理页面
       </form>
+
       <!-- 用户信息页面 -->
-      <form v-if = "info">
+      <form v-if="info">
         <div v-if="user">
           <p>用户名: {{ user.username }}</p>
           <p>用户ID: {{ user.id }}</p>
@@ -54,8 +60,9 @@
           <p>加载中...</p>
         </div>
       </form>
+
       <!-- 信息设置页面 -->
-      <form v-if = "setting">
+      <form v-if="setting">
         这是信息设置页面
       </form>
     </div>
@@ -67,6 +74,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { deleteAcc_post } from '@/assets/script/login_request.js';
 
 export default {
   name: 'UserCenter',
@@ -141,8 +149,15 @@ export default {
       router.push('/');
     };
 
+    const delete_acc = () => {
+      // 删除账号
+      deleteAcc_post(store.state.token);
+      store.dispatch('logout');
+      router.push('/');
+    };
+
     return {
-      user, to_send_article, to_my_draft, to_article_manage, to_my_info, to_info_setting, logout, article, draft, manage, info, setting
+      user, to_send_article, to_my_draft, to_article_manage, to_my_info, to_info_setting, logout, article, draft, manage, info, setting, delete_acc
     };
   }
 };

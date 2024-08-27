@@ -32,6 +32,7 @@ const store = createStore({
       localStorage.removeItem('jwt-token');
       commit('logout');
     },
+
     async fetchUserData({ commit, state }) {
       try {
         const response = await fetch('http://localhost:8080/user/userinfo', {
