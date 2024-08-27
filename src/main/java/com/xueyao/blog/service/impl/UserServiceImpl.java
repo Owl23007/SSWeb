@@ -57,4 +57,10 @@ public class UserServiceImpl implements UserService {
         // 更新用户密码
         userMapper.updatePassword(user_id, RSAPassword);
     }
+
+    @Override
+    public void deleteAcc(Integer userId) {
+        // 删除用户
+        userMapper.deleteAcc(userId);
+    }
 }

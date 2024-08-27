@@ -12,4 +12,6 @@ public interface UserService {
     void updateAvatar(String url);
 
     void updatePassword(String newPwd);
+
+    void deleteAcc(Integer userId);
 }

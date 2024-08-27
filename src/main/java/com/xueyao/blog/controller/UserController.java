@@ -31,9 +31,7 @@ public class UserController {
 
     // @Pattern 验证参数的合法性
     @PostMapping("/register")
-    public Result onRegister(@Pattern(regexp = "^\\S{5,16}$") String username,
-                             @Email String email,
-                             @NotNull String password){
+    public Result onRegister(@Pattern(regexp = "^\\S{5,16}$") String username, @Email String email, @NotNull String password){
         // 检查用户是否已存在
         User u = userService.getUserByUsername(username);
         if(u!=null){
@@ -46,8 +44,7 @@ public class UserController {
 
     // @Pattern 验证参数的合法性
     @PostMapping("/login")
-    public Result<String> onLogin(@Pattern(regexp = "^\\S{5,16}$") String username,
-                                  @NotNull String password) {
+    public Result<String> onLogin(@Pattern(regexp = "^\\S{5,16}$") String username, @NotNull String password) {
         // 检查用户是否存在
         User LoginUser = userService.getUserByUsername(username);
         if (LoginUser == null) {
@@ -119,6 +116,15 @@ public class UserController {
         return Result.success();
     }
 
+    @DeleteMapping("/deleteAcc")
+    public Result onDeleteAcc(){
+        // 获取用户id
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer user_id = (Integer) map.get("id");
+        // 删除用户
+        userService.deleteAcc(user_id);
+        return Result.success();
+    }
 
 
 }

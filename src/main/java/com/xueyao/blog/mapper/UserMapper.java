@@ -27,4 +27,8 @@ public interface UserMapper {
     //更新用户密码
     @Update("update user set password = #{rsaPassword}, update_time = now() where id = #{id}")
     void updatePassword(Integer id ,String rsaPassword);
+
+    //删除用户
+    @Update("delete from user where id = #{userId}")
+    void deleteAcc(Integer userId);
 }
