@@ -1,0 +1,59 @@
+.container{
+    padding-top: 40px;
+    width: 60%;
+    margin: 0 auto;
+  }
+  .left_container_article{
+    padding-top: 10px;
+  }
+  .left_container_info{
+    padding-top: 10px;
+  }
+  .left_container{
+      display: inline-block;
+      vertical-align: top; /* 对齐方式 */
+      width: 25%; /* 设置宽度 */
+      box-sizing: border-box; /* 包含padding和border在内 */
+      padding: 10px; /* 添加内边距 */
+      background-color: #fffdfd; /* 背景颜色以便区分 */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .right_container{
+    margin-left: 20px;
+      display: inline-block;
+      vertical-align: top; /* 对齐方式 */
+      width: 70%; /* 设置宽度 */
+      height: 500px;
+      box-sizing: border-box; /* 包含padding和border在内 */
+      background-color: #fffdfd; /* 背景颜色以便区分 */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .text_button{
+    /* 移除默认样式 */
+    text-decoration: none;
+    font-size: 25px;
+    color: black;
+    font-family: '宋体';
+    /* 设置鼠标样式 */
+    cursor: default;
+  }
+  .title_text{
+    /* 设置字体样式 */
+    font-size: 30px;  /* 设置字体大小 */
+    font-family: '微软雅黑', sans-serif; /* 设置字体 */
+    margin-left: 20px; /* 将导航链接与标题分开 */
+  }
+  .info_menu_list{
+    padding: 5px;
+    padding-top: 5px; /* 添加顶部外边距 */
+    list-style-type: none; /* 去掉默认的列表样式 */
+    margin: 0 auto; /* 让元素居中 */
+  }
+  .info_menu_list_li:hover{
+    background-color: #ccc;
+    border-radius: 5px;
+  }
