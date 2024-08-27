@@ -7,6 +7,7 @@ import com.xueyao.blog.utils.JwtUtil;
 import com.xueyao.blog.utils.RsaUtil;
 import com.xueyao.blog.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class UserController {
     @PostMapping("/register")
     public Result onRegister(@Pattern(regexp = "^\\S{5,16}$") String username,
                              @Email String email,
-                             @Pattern(regexp = "^\\S{5,16}$") String password){
+                             @NotNull String password){
         // 检查用户是否已存在
         User u = userService.getUserByUsername(username);
         if(u!=null){
@@ -44,7 +45,8 @@ public class UserController {
 
     // @Pattern 验证参数的合法性
     @PostMapping("/login")
-    public Result<String> onLogin(@Pattern(regexp = "^\\S{5,16}$") String username, @Pattern(regexp = "^\\S{5,16}$") String password) {
+    public Result<String> onLogin(@Pattern(regexp = "^\\S{5,16}$") String username,
+                                  @NotNull String password) {
         // 检查用户是否存在
         User LoginUser = userService.getUserByUsername(username);
         if (LoginUser == null) {
