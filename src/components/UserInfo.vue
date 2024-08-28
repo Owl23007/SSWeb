@@ -24,11 +24,8 @@
           <div class="info_menu_list_li" @click="to_info_setting">
             <li><a class="text_button">信息设置</a></li>
           </div>
-          <div class="info_menu_list_li" @click="logout">
-            <li><a class="text_button">退出登陆</a></li>
-          </div>
-          <div class="info_menu_list_li">
-            <li><a class="text_button" @click="delete_acc">注销账号</a></li>
+          <div class="info_menu_list_li" @click="to_delete_acc">
+            <li><a class="text_button">注销账号</a></li>
           </div>
         </ul>
       </div>
@@ -65,6 +62,16 @@
       <form v-if="setting">
         这是信息设置页面
       </form>
+
+      <!-- 删除账号页面 -->
+      <form v-if="deleteacc">
+        <div>
+          <h2>确定要删除账号吗?</h2>
+        </div>
+        <input type="password" placeholder="请输入密码" v-model="password" />
+        <p>请在此处输入密码，然后点击“确定”按钮</p>
+        <button @click="delete_acc">确定</button>
+      </form>
     </div>
   </div>
 
@@ -88,6 +95,8 @@ export default {
     const manage = ref(false);
     const info = ref(true);
     const setting = ref(false);
+    const deleteacc = ref(false);
+    const password = ref('');
 
 
     onMounted(async () => {
@@ -105,6 +114,7 @@ export default {
       manage.value = false;
       info.value = false;
       setting.value = false;
+      deleteacc.value = false;
     };
 
     const to_my_draft = () => {
@@ -114,6 +124,7 @@ export default {
       manage.value = false;
       info.value = false;
       setting.value = false;
+      deleteacc.value = false;
     };
 
     const to_article_manage = () => {
@@ -123,6 +134,7 @@ export default {
       draft.value = false;
       info.value = false;
       setting.value = false;
+      deleteacc.value = false;
     };
 
     const to_my_info = () => {
@@ -132,6 +144,7 @@ export default {
       draft.value = false;
       manage.value = false;
       setting.value = false;
+      deleteacc.value = false;
     };
 
     const to_info_setting = () => {
@@ -141,23 +154,53 @@ export default {
       draft.value = false;
       manage.value = false;
       info.value = false;
+      deleteacc.value = false;
     };
 
-    const logout = () => {
-      // 退出登陆
-      store.dispatch('logout');
-      router.push('/');
+    const to_delete_acc = () => {
+      // 将右边的页面转换成删除账号页面
+      deleteacc.value = true;
+      article.value = false;
+      draft.value = false;
+      manage.value = false;
+      info.value = false;
+      setting.value = false;
     };
 
     const delete_acc = () => {
       // 删除账号
-      deleteAcc_post(store.state.token);
+      try {
+        const res = deleteAcc_post(store.state.token, password.value);
+        if (res.code !== 0) {
+          alert("删除失败！原因: " + res.message);
+          return;
+        }
+      }
+      catch (e) {
+        alert("请求失败！");
+        return;
+      }
       store.dispatch('logout');
       router.push('/');
     };
 
+
     return {
-      user, to_send_article, to_my_draft, to_article_manage, to_my_info, to_info_setting, logout, article, draft, manage, info, setting, delete_acc
+      user,
+      to_send_article,
+      to_my_draft,
+      to_article_manage,
+      to_my_info,
+      to_info_setting,
+      to_delete_acc,
+      article,
+      draft,
+      manage,
+      info,
+      setting,
+      delete_acc,
+      deleteacc,
+      password
     };
   }
 };
