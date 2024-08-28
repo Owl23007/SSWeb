@@ -1,11 +1,11 @@
-package com.xueyao.blog.controller;
+package com.SSweb.blog.controller;
 
 
-import com.xueyao.blog.pojo.Result;
-import com.xueyao.blog.pojo.User;
-import com.xueyao.blog.utils.JwtUtil;
-import com.xueyao.blog.utils.RsaUtil;
-import com.xueyao.blog.utils.ThreadLocalUtil;
+import com.SSweb.blog.pojo.Result;
+import com.SSweb.blog.pojo.User;
+import com.SSweb.blog.utils.JwtUtil;
+import com.SSweb.blog.utils.RsaUtil;
+import com.SSweb.blog.utils.ThreadLocalUtil;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.xueyao.blog.service.UserService;
+import com.SSweb.blog.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;

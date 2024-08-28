@@ -1,4 +1,4 @@
-package com.xueyao.blog.pojo;
+package com.SSweb.blog.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

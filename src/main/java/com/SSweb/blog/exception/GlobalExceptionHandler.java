@@ -1,7 +1,7 @@
-package com.xueyao.blog.exception;
+package com.SSweb.blog.exception;
 
 
-import com.xueyao.blog.pojo.Result;
+import com.SSweb.blog.pojo.Result;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

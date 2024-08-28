@@ -1,11 +1,10 @@
-package com.xueyao.blog.config;
+package com.SSweb.blog.config;
 
-import com.xueyao.blog.interceptors.LoginInterceptor;
+import com.SSweb.blog.interceptors.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 
 // Web配置类

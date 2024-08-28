@@ -1,12 +1,12 @@
-package com.xueyao.blog.service.impl;
+package com.SSweb.blog.service.impl;
 
-import com.xueyao.blog.mapper.UserMapper;
-import com.xueyao.blog.pojo.User;
-import com.xueyao.blog.service.UserService;
-import com.xueyao.blog.utils.ThreadLocalUtil;
+import com.SSweb.blog.mapper.UserMapper;
+import com.SSweb.blog.pojo.User;
+import com.SSweb.blog.service.UserService;
+import com.SSweb.blog.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.xueyao.blog.utils.RsaUtil;
+import com.SSweb.blog.utils.RsaUtil;
 
 import java.time.LocalDateTime;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.xueyao.blog.service;
+package com.SSweb.blog.service;
 
 public interface ArticleService {
 }

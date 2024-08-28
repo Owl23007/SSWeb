@@ -1,8 +1,8 @@
-package com.xueyao.blog.controller;
+package com.SSweb.blog.controller;
 
 
-import com.xueyao.blog.pojo.Result;
-import com.xueyao.blog.service.ArticleService;
+import com.SSweb.blog.pojo.Result;
+import com.SSweb.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

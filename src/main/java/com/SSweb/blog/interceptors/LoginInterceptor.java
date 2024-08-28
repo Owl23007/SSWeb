@@ -1,7 +1,7 @@
-package com.xueyao.blog.interceptors;
+package com.SSweb.blog.interceptors;
 
-import com.xueyao.blog.utils.JwtUtil;
-import com.xueyao.blog.utils.ThreadLocalUtil;
+import com.SSweb.blog.utils.JwtUtil;
+import com.SSweb.blog.utils.ThreadLocalUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;

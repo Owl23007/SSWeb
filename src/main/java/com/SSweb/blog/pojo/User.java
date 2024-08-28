@@ -1,4 +1,4 @@
-package com.xueyao.blog.pojo;
+package com.SSweb.blog.pojo;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

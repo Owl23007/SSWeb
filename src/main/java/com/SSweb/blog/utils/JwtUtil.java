@@ -1,4 +1,4 @@
-package com.xueyao.blog.utils;
+package com.SSweb.blog.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
