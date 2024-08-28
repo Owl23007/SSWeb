@@ -32,9 +32,9 @@
     </div>
     <div class="right_container">
       <!-- 投稿页面 -->
-      <from v-if="article">
+      <form v-if="article">
         这是投稿页面
-      </from>
+      </form>
 
       <!-- 草稿页面 -->
       <form v-if="draft">
@@ -68,7 +68,8 @@
         <div>
           <h2>确定要删除账号吗?</h2>
         </div>
-        <input type="password" placeholder="请输入密码" v-model="password" />
+        <input type="text" v-model="username" autocomplete="username" style="display: none;" />
+        <input type="password" placeholder="请输入密码" v-model="password" autocomplete="current-password" />
         <p>请在此处输入密码，然后点击“确定”按钮</p>
         <button @click="delete_acc">确定</button>
       </form>
@@ -76,7 +77,6 @@
   </div>
 
 </template>
-
 <script>
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
@@ -84,12 +84,12 @@ import { useRouter } from 'vue-router';
 import { deleteAcc_post } from '@/assets/script/login_request.js';
 
 export default {
-  name: 'UserCenter',
+  name: 'UserInfo',
   setup() {
     const store = useStore();
     const router = useRouter();
-    const user = computed(() => store.state.user);
     const isLoggedIn = computed(() => store.state.isLoggedIn);
+    const isLoadingUser = computed(() => store.state.isLoadingUser);
     const article = ref(false);
     const draft = ref(false);
     const manage = ref(false);
@@ -97,7 +97,7 @@ export default {
     const setting = ref(false);
     const deleteacc = ref(false);
     const password = ref('');
-
+    const username = computed(() => store.state.user?.username || '');
 
     onMounted(async () => {
       if (isLoggedIn.value) {
@@ -105,102 +105,81 @@ export default {
       } else {
         router.push('/login');
       }
-    },)
+    });
 
-    const to_send_article = () => {
-      // 将右边的页面转换成发布文章页面
-      article.value = true;
+    const resetStates = () => {
+      article.value = false;
       draft.value = false;
       manage.value = false;
       info.value = false;
       setting.value = false;
       deleteacc.value = false;
+    };
+
+    const to_send_article = () => {
+      resetStates();
+      article.value = true;
     };
 
     const to_my_draft = () => {
-      // 将右边的页面转换成我的草稿页面
+      resetStates();
       draft.value = true;
-      article.value = false;
-      manage.value = false;
-      info.value = false;
-      setting.value = false;
-      deleteacc.value = false;
     };
 
     const to_article_manage = () => {
-      // 将右边的页面转换成文章管理页面
+      resetStates();
       manage.value = true;
-      article.value = false;
-      draft.value = false;
-      info.value = false;
-      setting.value = false;
-      deleteacc.value = false;
     };
 
     const to_my_info = () => {
-      // 将右边的页面转换成我的信息页面
+      resetStates();
       info.value = true;
-      article.value = false;
-      draft.value = false;
-      manage.value = false;
-      setting.value = false;
-      deleteacc.value = false;
     };
 
     const to_info_setting = () => {
-      // 将右边的页面转换成信息设置页面
+      resetStates();
       setting.value = true;
-      article.value = false;
-      draft.value = false;
-      manage.value = false;
-      info.value = false;
-      deleteacc.value = false;
     };
 
     const to_delete_acc = () => {
-      // 将右边的页面转换成删除账号页面
+      resetStates();
       deleteacc.value = true;
-      article.value = false;
-      draft.value = false;
-      manage.value = false;
-      info.value = false;
-      setting.value = false;
     };
 
-    const delete_acc = () => {
-      // 删除账号
+    const delete_acc = async () => {
       try {
-        const res = deleteAcc_post(store.state.token, password.value);
+        const res = await deleteAcc_post(store.state.token, password.value);
         if (res.code !== 0) {
           alert("删除失败！原因: " + res.message);
           return;
         }
-      }
-      catch (e) {
+      } catch (e) {
         alert("请求失败！");
         return;
       }
+      console.log(username.value, "已删除账号");
       store.dispatch('logout');
       router.push('/');
     };
 
-
     return {
-      user,
+      isLoggedIn,
+      isLoadingUser,
+      article,
+      draft,
+      manage,
+      info,
+      setting,
+      deleteacc,
+      password,
+      username,
       to_send_article,
       to_my_draft,
       to_article_manage,
       to_my_info,
       to_info_setting,
       to_delete_acc,
-      article,
-      draft,
-      manage,
-      info,
-      setting,
-      delete_acc,
-      deleteacc,
-      password
+      delete_acc
     };
   }
 };
