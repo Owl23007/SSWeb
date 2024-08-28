@@ -146,7 +146,8 @@ export default {
       deleteacc.value = true;
     };
 
-    const delete_acc = async () => {
+    const delete_acc = async() => {
+      // 删除账号
       try {
         const res = await deleteAcc_post(store.state.token, password.value);
         if (res.code !== 0) {
