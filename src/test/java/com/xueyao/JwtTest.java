@@ -3,9 +3,9 @@ package com.xueyao;
 
 import org.junit.jupiter.api.Test;
 
-import static com.xueyao.blog.utils.RsaUtil.getRSA;
+import static com.SSweb.blog.utils.RsaUtil.getRSA;
 import static org.assertj.core.api.Assertions.assertThat;
-import com.xueyao.blog.utils.JwtUtil;
+import com.SSweb.blog.utils.JwtUtil;
 
 import java.util.HashMap;
 import java.util.Map;

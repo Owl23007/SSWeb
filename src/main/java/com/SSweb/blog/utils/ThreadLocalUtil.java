@@ -1,4 +1,4 @@
-package com.xueyao.blog.utils;
+package com.SSweb.blog.utils;
 
 import java.util.Map;
 /**

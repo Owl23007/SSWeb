@@ -1,6 +1,6 @@
-package com.xueyao.blog.service;
+package com.SSweb.blog.service;
 
-import com.xueyao.blog.pojo.User;
+import com.SSweb.blog.pojo.User;
 
 public interface UserService {
     User getUserByUsername(String username);

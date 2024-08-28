@@ -1,6 +1,6 @@
-package com.xueyao.blog.mapper;
+package com.SSweb.blog.mapper;
 
-import com.xueyao.blog.pojo.User;
+import com.SSweb.blog.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

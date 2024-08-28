@@ -1,4 +1,4 @@
-package com.xueyao.blog.config;
+package com.SSweb.blog.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
