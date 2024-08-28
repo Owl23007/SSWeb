@@ -23,12 +23,12 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/user")
 @Validated
-@CrossOrigin(origins = "http://localhost:8081")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
+    // 注册
     // @Pattern 验证参数的合法性
     @PostMapping("/register")
     public Result onRegister(@Pattern(regexp = "^\\S{5,16}$") String username, @Email String email, @NotNull String password){
@@ -42,6 +42,7 @@ public class UserController {
         return Result.success();
     }
 
+    // 登录
     // @Pattern 验证参数的合法性
     @PostMapping("/login")
     public Result<String> onLogin(@Pattern(regexp = "^\\S{5,16}$") String username, @NotNull String password) {
@@ -64,6 +65,7 @@ public class UserController {
         return Result.error("密码错误");
     }
 
+    // 获取用户信息
     @GetMapping("/userinfo")
     public Result<User> onUserInfo(){
         // 根据用户名查询用户
@@ -74,6 +76,7 @@ public class UserController {
         return Result.success(u);
     }
 
+    // 更新用户信息
     // @RequestBody 将请求体中的json数据封装到user对象中
     // @Validated 根据实体类User验证请求参数的合法性
     @PutMapping("/update")
@@ -83,6 +86,7 @@ public class UserController {
         return Result.success();
     }
 
+    // 更新头像
     // @RequestParam 将请求参数中的url封装到url中
     // @URL 验证参数的合法性
     @PatchMapping("/updateAvatar")
@@ -92,6 +96,8 @@ public class UserController {
         return Result.success();
     }
 
+
+    // 更新密码
     @PatchMapping("/updatePwd")
     public Result onUpdatePassword(@RequestBody Map<String,String> params){
         // 校验参数
@@ -116,15 +122,21 @@ public class UserController {
         return Result.success();
     }
 
+    // 注销账号
     @DeleteMapping("/deleteAcc")
-    public Result onDeleteAcc(){
-        // 获取用户id
+    public Result onDeleteAcc(@NotNull String password){
+        // 获取用户
         Map<String,Object> map = ThreadLocalUtil.get();
         Integer user_id = (Integer) map.get("id");
+        String user_name = (String) map.get("username");
+        User deleteUser = userService.getUserByUsername(user_name);
+
+        // 校验密码
+        if (!RsaUtil.getRSA(password).equals(deleteUser.getPassword())){
+            return Result.error("密码错误。");
+        }
         // 删除用户
         userService.deleteAcc(user_id);
         return Result.success();
     }
-
-
 }
