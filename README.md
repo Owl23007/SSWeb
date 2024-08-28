@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # SSWeb 后端
 
 此仓库包含 SSWeb 项目的后端代码。后端使用 Java、Spring Boot 和 Maven 实现。
