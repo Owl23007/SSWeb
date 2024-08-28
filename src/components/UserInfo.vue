@@ -167,10 +167,11 @@ export default {
       setting.value = false;
     };
 
-    const delete_acc = () => {
+    const delete_acc = async() => {
       // 删除账号
       try {
-        const res = deleteAcc_post(store.state.token, password.value);
+        const res = await deleteAcc_post(store.state.token, password.value);
+        console.log(res);
         if (res.code !== 0) {
           alert("删除失败！原因: " + res.message);
           return;

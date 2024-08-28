@@ -28,9 +28,11 @@ export const login_post = async (username, password) => {
 };
 
 export const deleteAcc_post = async (token, password) => {
-    const response = await axios.delete('http://localhost:8080/user/deleteAcc',
-        { password: password }, {
+    const encryptedPassword = sha256(password).toString();
+    const response = await axios.delete('http://localhost:8080/user/deleteAcc', {
+        params: { password: encryptedPassword },
         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': `Duel ${token}`
         }
     });
