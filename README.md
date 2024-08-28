@@ -38,7 +38,7 @@ git checkout -b backend
 
 要构建项目，请导航到项目目录并运行：
 
-application.java
+BlogApplication.java
 
 ### 运行应用程序
 
