@@ -8,7 +8,7 @@ public interface UserService {
 
     void register(String username,String email, String password);
 
-    void update(User user);
+    void update(String nickname,String signature);
 
     void updateAvatar(String url);
 

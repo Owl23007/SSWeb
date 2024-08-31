@@ -32,11 +32,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(User user) {
-        // 设置更新时间
-        user.setUpdateTime(LocalDateTime.now());
+    public void update(String nickname,String signature) {
+        // 获取用户
+        Map<String,Object> map = ThreadLocalUtil.get();
+        String username = (String) map.get("username");
+        User u = userMapper.getUserByUsername(username);
         // 更新用户基本信息
-        userMapper.update(user);
+        u.setNickname(nickname);
+        u.setSignature(signature);
+        // 设置更新时间
+        u.setUpdateTime(LocalDateTime.now());
+        // 更新用户基本信息
+        userMapper.update(u);
     }
 
     @Override

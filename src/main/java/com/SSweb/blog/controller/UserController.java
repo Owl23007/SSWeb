@@ -91,9 +91,9 @@ public class UserController {
     // @RequestBody 将请求体中的json数据封装到user对象中
     // @Validated 根据实体类User验证请求参数的合法性
     @PutMapping("/update")
-    public Result onUpdate(@RequestBody @Validated User user){
+    public Result onUpdate(@RequestParam String nickname,@RequestParam String signature){
         // 更新用户基本信息
-        userService.update(user);
+        userService.update(nickname,signature);
         return Result.success();
     }
 

@@ -17,8 +17,8 @@ public interface UserMapper {
     @Select("select * from user where username = #{username}")
     User getUserByUsername(String username);
 
-    // 更新用户
-    @Update("update user set nickname = #{nickname}, update_time = #{updateTime} where id = #{id}")
+    // 更新用户信息
+    @Update("update user set nickname = #{nickname}, signature = #{signature}, update_time = #{updateTime} where id = #{id}")
     void update(User user);
 
     //更新用户头像
