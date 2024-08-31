@@ -62,6 +62,10 @@ export default {
     const user = computed(() => store.state.user);
     const articles = ref([]);
     const editInfoMode = ref(false);
+    
+    if(user.nickname === null){
+      nickname = '存续院研究院',user.id;
+    }
 
     onMounted(async () => {
       if (store.state.isLoggedIn) {
