@@ -14,15 +14,27 @@
           <a v-if="!editInfoMode">{{ user.nickname }}</a>
           <input v-model="user.nickname" v-if="editInfoMode" />
         </p>
-        <p><strong>账号：</strong> <a>{{ user.username }}</a></p>
-        <p><strong>邮箱：</strong> <a>{{ user.email }}</a></p>
+        <p>
+          <strong>账号：</strong>
+          <a>{{ user.username }}</a>
+        </p>
+        <p>
+          <strong>邮箱：</strong>
+          <a>{{ user.email }}</a>
+        </p>
         <p>
           <strong>个人签名：</strong>
           <a v-if="!editInfoMode">{{ user.signature }}</a>
           <input v-model="user.signature" v-if="editInfoMode" />
         </p>
-        <p class="gray-text"><strong>ID:</strong> <a>{{ user.id }}</a></p>
-        <p class="gray-text"><strong>注册时间：</strong> <a>{{ user.create_time }}</a></p>
+        <p class="gray-text">
+          <strong>ID:</strong>
+          <a>{{ user.id }}</a>
+        </p>
+        <p class="gray-text">
+          <strong>注册时间：</strong>
+          <a>{{ user.createTime }}</a>
+        </p>
         <button class="edit-info-button" @click="editInfo" v-if="!editInfoMode">编辑
           <i class="fas fa-pencil-alt"></i>
         </button>
