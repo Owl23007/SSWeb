@@ -20,7 +20,9 @@
         <button class="edit-info-button" @click="editInfo" v-if="!editInfoMode">编辑
           <i class="fas fa-pencil-alt"></i>
         </button>
-        <button v-if="editInfoMode" @click="updateInfo">保存</button>
+        <!-- 样式暂时用的 write-article-button -->
+        <button class = "write-article-button" v-if="editInfoMode" @click="updateInfo">保存</button>
+        <button class = "write-article-button" v-if="editInfoMode" @click="editInfo">取消</button>
       </div>
     </div>
 
