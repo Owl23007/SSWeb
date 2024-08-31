@@ -36,4 +36,8 @@ public interface UserMapper {
     // 查询其他用户信息
     @Select("select * from user where id = #{userId}")
     OtherUser getOtherUserById(Integer userId);
+
+    // 初始化用户信息
+    @Update("update user set nickname = #{nickname}, signature = #{signature} where id = #{id}")
+    void init(Integer id, String nickname, String signature);
 }

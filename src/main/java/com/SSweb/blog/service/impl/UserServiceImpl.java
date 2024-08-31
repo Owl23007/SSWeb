@@ -47,6 +47,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void init(String username) {
+        User u = userMapper.getUserByUsername(username);
+        userMapper.init(u.getId(), String.format("存续院用户%d", u.getId()), "这个用户还没有设置签名哦~");
+    }
+
+    @Override
     public void updateAvatar(String url) {
         // 获取用户id
         Map<String,Object> map = ThreadLocalUtil.get();

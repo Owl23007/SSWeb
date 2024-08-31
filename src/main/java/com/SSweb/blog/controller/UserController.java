@@ -40,6 +40,7 @@ public class UserController {
         }
         // 注册
         userService.register(username, email, password);
+        userService.init(username);
         return Result.success();
     }
 
