@@ -42,7 +42,7 @@
 import { ref } from 'vue';
 import store from '../store/index.js';
 import router from '../router/index.js';
-import { login_post, register_post } from '../assets/script/login_request.js';
+import { login_post, register_post } from '../assets/script/user_request.js';
 
 
 export default {

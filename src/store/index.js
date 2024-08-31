@@ -41,7 +41,7 @@ const store = createStore({
             'Content-Type': 'application/json',
             'Authorization': `Duel ${state.token}`,
           },
-        });
+        });   
 
         if (!response.ok) {
           throw new Error('网络响应失败');

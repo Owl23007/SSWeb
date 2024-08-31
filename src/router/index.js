@@ -3,7 +3,7 @@ import loginPage from '../components/LoginComponent.vue'
 import homePage from '../components/Home.vue'
 import UserInfo from '../components/UserInfo.vue'
 import ArticleList from '../components/ArticleList.vue'
-import store from '@/store'; // 假设你的 Vuex store 文件路径是 '@/store'
+import store from '@/store';
 
 const routes = [
   {
@@ -33,7 +33,6 @@ const routes = [
     component: UserInfo,
     meta:{
       title: '用户信息',
-      requiresAuth: true // 需要认证
     }
   },
   {
@@ -47,6 +46,7 @@ const routes = [
   }
 ]
 
+// 创建路由实例
 const router = createRouter({
   history: createWebHistory(),
   routes

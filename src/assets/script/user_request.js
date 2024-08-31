@@ -27,14 +27,34 @@ export const login_post = async (username, password) => {
     return response.data;
 };
 
-export const deleteAcc_post = async (token, password) => {
+export const deleteAcc_delete = async (token, password) => {
+    if (password === '') {
+        alert("请输入密码。");
+        return;
+    }
     const encryptedPassword = sha256(password).toString();
-    const response = await axios.delete('http://localhost:8080/user/deleteAcc', {
-        params: { password: encryptedPassword },
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': `Duel ${token}`
+    console.log(encryptedPassword);
+    const response = await axios.post('http://localhost:8080/user/unregister', 
+        { password: encryptedPassword },
+        {
+            headers: {
+                Authorization: `Duel ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
         }
-    });
+    );
+    return response.data;
+};
+
+export const  updateAvatar_post = async (token, avatar) => {
+    const response = await axios.post('http://localhost:8080/user/avatar', 
+        { avatar: avatar },
+        {
+            headers: {
+                Authorization: `Duel ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+    );
     return response.data;
 }
