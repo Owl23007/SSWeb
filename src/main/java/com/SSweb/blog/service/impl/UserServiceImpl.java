@@ -1,6 +1,7 @@
 package com.SSweb.blog.service.impl;
 
 import com.SSweb.blog.mapper.UserMapper;
+import com.SSweb.blog.pojo.OtherUser;
 import com.SSweb.blog.pojo.User;
 import com.SSweb.blog.service.UserService;
 import com.SSweb.blog.utils.ThreadLocalUtil;
@@ -62,5 +63,11 @@ public class UserServiceImpl implements UserService {
     public void deleteAcc(Integer userId) {
         // 删除用户
         userMapper.deleteAcc(userId);
+    }
+
+    @Override
+    public OtherUser getOtherUserById(Integer userId) {
+        // 获取其他用户对象
+        return userMapper.getOtherUserById(userId);
     }
 }

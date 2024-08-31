@@ -1,5 +1,6 @@
 package com.SSweb.blog.mapper;
 
+import com.SSweb.blog.pojo.OtherUser;
 import com.SSweb.blog.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -31,4 +32,8 @@ public interface UserMapper {
     //删除用户
     @Update("delete from user where id = #{userId}")
     void deleteAcc(Integer userId);
+
+    // 查询其他用户信息
+    @Select("select * from user where id = #{userId}")
+    OtherUser getOtherUserById(Integer userId);
 }

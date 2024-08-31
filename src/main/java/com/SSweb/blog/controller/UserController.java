@@ -1,6 +1,7 @@
 package com.SSweb.blog.controller;
 
 
+import com.SSweb.blog.pojo.OtherUser;
 import com.SSweb.blog.pojo.Result;
 import com.SSweb.blog.pojo.User;
 import com.SSweb.blog.utils.JwtUtil;
@@ -76,6 +77,16 @@ public class UserController {
         return Result.success(u);
     }
 
+    // 根据用户ID查询用户信息
+    @GetMapping("/userinfoById")
+    public Result onUserInfoById(@RequestParam Integer userId){
+        // 根据用户id查询用户
+        OtherUser u = userService.getOtherUserById(userId);
+        if(u==null)
+            return Result.error("用户不存在");
+        return Result.success(u);
+    }
+
     // 更新用户信息
     // @RequestBody 将请求体中的json数据封装到user对象中
     // @Validated 根据实体类User验证请求参数的合法性
@@ -125,6 +136,7 @@ public class UserController {
     // 注销账号
     @DeleteMapping("/deleteAcc")
     public Result onDeleteAcc(@NotNull String password){
+
         // 获取用户
         Map<String,Object> map = ThreadLocalUtil.get();
         Integer user_id = (Integer) map.get("id");

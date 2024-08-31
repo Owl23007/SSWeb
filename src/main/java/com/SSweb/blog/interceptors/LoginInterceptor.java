@@ -18,6 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 令牌验证
 
         String token = request.getHeader("Authorization");
+        String data = request.getQueryString();
         if (token != null && token.startsWith("Duel ")) {
             token = token.substring(5); // 去掉 "Duel " 前缀
         }

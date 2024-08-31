@@ -1,5 +1,6 @@
 package com.SSweb.blog.service;
 
+import com.SSweb.blog.pojo.OtherUser;
 import com.SSweb.blog.pojo.User;
 
 public interface UserService {
@@ -14,4 +15,6 @@ public interface UserService {
     void updatePassword(String newPwd);
 
     void deleteAcc(Integer userId);
+
+    OtherUser getOtherUserById(Integer userId);
 }
