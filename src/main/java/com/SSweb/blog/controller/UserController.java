@@ -38,8 +38,14 @@ public class UserController {
         if(u!=null){
             return Result.error("用户名已存在");
         }
-        // 注册
+        // 检查邮箱是否已经被注册
+        User user = userService.getUserByEmail(email);
+        if(user!=null){
+            return Result.error("邮箱已被注册");
+        }
+        // 注册用户
         userService.register(username, email, password);
+        // 初始化用户
         userService.init(username);
         return Result.success();
     }

@@ -24,6 +24,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return userMapper.getUserByEmail(email);
+    }
+
+    @Override
+    public OtherUser getOtherUserById(Integer userId) {
+        // 获取其他用户对象
+        return userMapper.getOtherUserById(userId);
+    }
+
+    @Override
     public void register(String username, String email, String password) {
         // 加密密码
         String RSAPassword = RsaUtil.getRSA(password);
@@ -76,11 +87,5 @@ public class UserServiceImpl implements UserService {
     public void deleteAcc(Integer userId) {
         // 删除用户
         userMapper.deleteAcc(userId);
-    }
-
-    @Override
-    public OtherUser getOtherUserById(Integer userId) {
-        // 获取其他用户对象
-        return userMapper.getOtherUserById(userId);
     }
 }

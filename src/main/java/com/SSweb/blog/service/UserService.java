@@ -2,6 +2,7 @@ package com.SSweb.blog.service;
 
 import com.SSweb.blog.pojo.OtherUser;
 import com.SSweb.blog.pojo.User;
+import jakarta.validation.constraints.Email;
 
 public interface UserService {
     User getUserByUsername(String username);
@@ -19,4 +20,6 @@ public interface UserService {
     void deleteAcc(Integer userId);
 
     OtherUser getOtherUserById(Integer userId);
+
+    User getUserByEmail(@Email String email);
 }
