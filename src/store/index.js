@@ -2,7 +2,7 @@ import { createStore } from 'vuex';
 
 const store = createStore({
   state: {
-    user: null,
+    user: localStorage.getItem('user') || null,
     token: localStorage.getItem('jwt-token') || '',
     isLoggedIn: !!localStorage.getItem('jwt-token'),
   },
@@ -15,14 +15,15 @@ const store = createStore({
       localStorage.setItem('jwt-token', token);
     },
     logout(state) {
-      state.user = null;
-      state.token = null;
+      state.token = '';
       state.isLoggedIn = false;
+      localStorage.removeItem('user');
     },
     login(state, token) {
       state.token = token;
       state.isLoggedIn = true;
       localStorage.setItem('jwt-token', token);
+      localStorage.setItem('user', state.user);
     },
   },
 
@@ -41,13 +42,13 @@ const store = createStore({
             'Content-Type': 'application/json',
             'Authorization': `Duel ${state.token}`,
           },
-        });   
+        });
 
         if (!response.ok) {
           throw new Error('网络响应失败');
         }
 
-        const res= await response.json();
+        const res = await response.json();
         if (res.code === 0) {
           commit('setUser', res.data);
         } else {
