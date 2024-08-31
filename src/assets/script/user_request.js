@@ -47,8 +47,8 @@ export const deleteAcc_delete = async (token, password) => {
 };
 
 export const updateAvatar_patch = async (token, avatar) => {
-    const response = await axios.patch('http://localhost:8080/user/avatar',
-        { avatar: avatar },
+    const response = await axios.patch('http://localhost:8080/user/updateAvatar',
+        { url: avatar },
         {
             headers: {
                 Authorization: `Duel ${token}`,

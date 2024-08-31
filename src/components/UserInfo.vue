@@ -2,12 +2,12 @@
   <div class="container">
     <!-- 板块一：用户信息 -->
     <div class="user-info-section">
-      <div>
+      <div @click="editCard">
         <h2>个人卡片</h2>
-        <UserCard :user="user" @update-avatar="updateAvatar" />
+        <UserCard :user="user" @update-avatar="updateAvatar"/>
       </div>
 
-      <div class="user-details">
+      <div class="user-details" v-if="!cardSetMode">
         <h2>个人信息</h2>
         <p>
           <strong>昵称：</strong>
@@ -42,6 +42,9 @@
         <button class="write-article-button" v-if="editInfoMode" @click="updateInfo">保存</button>
         <button class="write-article-button" v-if="editInfoMode" @click="editInfo">取消</button>
       </div>
+      <div class="card-setting" v-if="cardSetMode">
+        <CardSetting />
+      </div>
     </div>
 
     <!-- 板块二：我的投稿 -->
@@ -69,17 +72,20 @@ import { useStore } from 'vuex';
 import defaultAvatar from '@/assets/default-avatar.png';
 import UserCard from './UserCard.vue';
 import { updateUserInfo_put } from '../assets/script/user_request.js';
+import CardSetting from './CardSetting.vue';
 
 export default {
   name: 'UserInfo',
   components: {
-    UserCard
+    UserCard,
+    CardSetting
   },
   setup() {
     const store = useStore();
     const user = computed(() => store.state.user);
     const articles = ref([]);
     const editInfoMode = ref(false);
+    const cardSetMode = ref(false)
 
     onMounted(async () => {
       if (store.state.isLoggedIn) {
@@ -91,8 +97,9 @@ export default {
       }
     });
 
-    const editAvatar = () => {
-      // 编辑头像的逻辑
+    const editCard = () => {
+      // 编辑卡片的逻辑
+      cardSetMode.value = !cardSetMode.value;
     };
 
     const editInfo = () => {
@@ -124,7 +131,8 @@ export default {
       user,
       articles,
       editInfoMode,
-      editAvatar,
+      cardSetMode,
+      editCard,
       editInfo,
       writeArticle,
       loadMoreArticles,
