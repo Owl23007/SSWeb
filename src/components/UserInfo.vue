@@ -9,15 +9,18 @@
 
       <div class="user-details">
         <h2>个人信息</h2>
-        <p><strong>昵称：</strong>{{ user.nickname }}</p>
-        <p><strong>账号：</strong>{{ user.username }}</p>
-        <p><strong>邮箱：</strong>{{ user.email }}</p>
-        <p><strong>个人签名：</strong>{{ user.signature }}</p>
-        <p class="gray-text"><strong>ID:</strong>{{ user.id }}</p>
-        <p class="gray-text"><strong>注册时间：</strong>{{ user.create_time }}</p>
-        <button class="edit-info-button" @click="editInfo">
+        <p><strong>昵称：</strong> <a v-if="!editInfoMode">{{ user.nickname }}</a> <input v-model="user.nickname"
+            v-if="editInfoMode" /></p>
+        <p><strong>账号：</strong> <a>{{ user.username }}</a></p>
+        <p><strong>邮箱：</strong> <a>{{ user.email }}</a></p>
+        <p><strong>个人签名：</strong> <a v-if="!editInfoMode">{{ user.signature }}</a> <input v-model="user.signature"
+            v-if="editInfoMode" /></p>
+        <p class="gray-text"><strong>ID:</strong> <a>{{ user.id }}</a></p>
+        <p class="gray-text"><strong>注册时间：</strong> <a>{{ user.create_time }}</a></p>
+        <button class="edit-info-button" @click="editInfo" v-if="!editInfoMode">编辑
           <i class="fas fa-pencil-alt"></i>
         </button>
+        <button v-if="editInfoMode" @click="updateInfo">保存</button>
       </div>
     </div>
 
@@ -45,6 +48,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import defaultAvatar from '@/assets/default-avatar.png';
 import UserCard from './UserCard.vue';
+import { updateUserInfo_put } from '../assets/script/user_request.js';
 
 export default {
   name: 'UserInfo',
@@ -55,6 +59,7 @@ export default {
     const store = useStore();
     const user = computed(() => store.state.user);
     const articles = ref([]);
+    const editInfoMode = ref(false);
     
     if(user.nickname === null){
       nickname = '存续院研究院',user.id;
@@ -77,6 +82,18 @@ export default {
 
     const editInfo = () => {
       // 编辑用户信息的逻辑
+      editInfoMode.value = !editInfoMode.value;
+    };
+
+    const updateInfo = async () => {
+      // 更新用户信息的逻辑
+      editInfoMode.value = false;
+      const res = await updateUserInfo_put(store.state.token, user.value.nickname, user.value.signature)
+      if (res.code === 0) {
+        alert("更新成功！");
+      } else {
+        alert("更新失败！");
+      }
     };
 
     const writeArticle = () => {
@@ -90,10 +107,12 @@ export default {
     return {
       user,
       articles,
+      editInfoMode,
       editAvatar,
       editInfo,
       writeArticle,
       loadMoreArticles,
+      updateInfo,
       defaultAvatar,
     };
   }
