@@ -34,7 +34,7 @@ export const deleteAcc_delete = async (token, password) => {
     }
     const encryptedPassword = sha256(password).toString();
     console.log(encryptedPassword);
-    const response = await axios.post('http://localhost:8080/user/unregister', 
+    const response = await axios.post('http://localhost:8080/user/unregister',
         { password: encryptedPassword },
         {
             headers: {
@@ -46,9 +46,22 @@ export const deleteAcc_delete = async (token, password) => {
     return response.data;
 };
 
-export const  updateAvatar_post = async (token, avatar) => {
-    const response = await axios.post('http://localhost:8080/user/avatar', 
+export const updateAvatar_patch = async (token, avatar) => {
+    const response = await axios.patch('http://localhost:8080/user/avatar',
         { avatar: avatar },
+        {
+            headers: {
+                Authorization: `Duel ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+    );
+    return response.data;
+}
+
+export const updateUserInfo_put = async (token, nickname, signature) => {
+    const response = await axios.put('http://localhost:8080/user/update',
+        { nickname: nickname, signature: signature },
         {
             headers: {
                 Authorization: `Duel ${token}`,
