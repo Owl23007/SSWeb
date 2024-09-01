@@ -4,11 +4,12 @@ const store = createStore({
   state: {
     user: localStorage.getItem('user') || null,
     token: localStorage.getItem('jwt-token') || '',
-    isLoggedIn: !!localStorage.getItem('jwt-token'),
+    isLoggedIn: localStorage.getItem('jwt-token') !== null && localStorage.getItem('user') !== null,
   },
   mutations: {
     setUser(state, user) {
       state.user = user;
+      localStorage.setItem('user', state.user);
     },
     setToken(state, token) {
       state.token = token;
@@ -18,6 +19,7 @@ const store = createStore({
       state.token = '';
       state.isLoggedIn = false;
       localStorage.removeItem('user');
+      localStorage.removeItem('jwt-token');
     },
     login(state, token) {
       state.token = token;
@@ -51,6 +53,7 @@ const store = createStore({
         const res = await response.json();
         if (res.code === 0) {
           commit('setUser', res.data);
+
         } else {
           console.error('获取用户信息失败:', res.message);
         }

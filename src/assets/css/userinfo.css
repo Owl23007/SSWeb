@@ -1,6 +1,6 @@
 .container {
   padding: 20px;
-  max-width: 80%;
+  max-width: 70%;
   margin: 1% auto;
   shape-rendering: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -10,28 +10,29 @@
 
 .user-info-section {
   display: flex;
-  align-items: center;
+  align-items: top;
   margin-bottom: 20px;
   margin-left: auto;
   position: relative;
+  max-height: 320px;
 }
-
-.avatar-container {
+.user-info-section h2 {
+  margin-top: 10px;
+}
+.user-details {
+  /* 右置顶 */
+  margin-left:auto;
   position: relative;
-  margin-right: 20px;
+ 
+  max-width: 400px;
+  max-height: 320px;
+  margin-bottom: 20px;
+  align-items: top;
 }
 
-.avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  position: absolute;
-  top: -50px;
-  left: 0;
-  z-index: 1;
+.user-details h2{
+  margin-top: 10px;
 }
-
 .edit-avatar-button {
   position: absolute;
   bottom: 0;
@@ -44,11 +45,7 @@
   cursor: pointer;
 }
 
-.user-details {
-  flex: 1;
-  position: relative;
-  margin-left: 100px;
-}
+
 
 .user-details p {
   margin: 5px 0;
@@ -59,15 +56,24 @@
 }
 
 .edit-info-button {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
   position: absolute;
   top: 0;
   right: 0;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
+  background: #ffffff;
+  color: black;
+  border: 1px solid rgb(176, 176, 176);
+  border-radius: 5px;
   padding: 5px;
+ 
   cursor: pointer;
+ 
+}
+.edit-info-button:hover {
+  background: #b5b5b5;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 .my-articles-section {

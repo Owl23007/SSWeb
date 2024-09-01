@@ -49,14 +49,17 @@
   .user-details {
     position: relative;
     z-index: 2;
-    
+    margin-top:-70px;  
   }
   
   .user-details h2 {
     margin: 10px 0 5px;
+    margin-left: -40px;
   }
-  
   .user-details p {
-    margin: 0;
-    font-style: italic;
+    margin: 10px 0 5px;
+    font-size:15px;
+    text-align: right;
+    white-space:normal; 
   }
+ 

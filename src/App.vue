@@ -61,11 +61,7 @@ import { useRouter } from 'vue-router';
 
 export default {
   name: 'App',
-  data() {
-    return {
-      defaultAvatar: require('@/assets/default-avatar.png')
-    };
-  },
+
   setup() {
     const store = useStore();
     const user = computed(() => store.state.user);
@@ -92,6 +88,7 @@ export default {
       user
     };
   }
+
 };
 </script>
 

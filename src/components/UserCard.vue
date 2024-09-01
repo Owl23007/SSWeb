@@ -7,6 +7,7 @@
     </div>
     <div class="user-details">
       <h2>{{ user.nickname }}</h2>
+      <p>{{ user.signature }}</p>
     </div>
   </div>
 </template>

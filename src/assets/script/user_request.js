@@ -59,6 +59,19 @@ export const updateAvatar_patch = async (token, avatar) => {
     return response.data;
 }
 
+export const updateBackground_patch = async (token, background) => {
+    const response = await axios.patch('http://localhost:8080/user/updateBackground',
+        { url: background },
+        {
+            headers: {
+                Authorization: `Duel ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+    );
+    return response.data;
+}
+
 export const updateUserInfo_put = async (token, nickname, signature) => {
     const response = await axios.put('http://localhost:8080/user/update',
         { nickname: nickname, signature: signature },
