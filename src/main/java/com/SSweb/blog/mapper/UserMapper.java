@@ -13,12 +13,24 @@ public interface UserMapper {
     @Insert("insert into user(username, password, email, create_time, update_time) values(#{username}, #{password}, #{email}, now(), now())")
     void add(String username, String email, String password);
 
+    // 初始化用户信息
+    @Update("update user set nickname = #{nickname}, signature = #{signature} where id = #{id}")
+    void init(Integer id, String nickname, String signature);
+
     // 查询用户
     @Select("select * from user where username = #{username}")
     User getUserByUsername(String username);
 
-    // 更新用户
-    @Update("update user set nickname = #{nickname}, update_time = #{updateTime} where id = #{id}")
+    // 根据邮箱查询用户
+    @Select("select * from user where email = #{email}")
+    User getUserByEmail(String email);
+
+    // 查询其他用户信息
+    @Select("select * from user where id = #{userId}")
+    OtherUser getOtherUserById(Integer userId);
+
+    // 更新用户信息
+    @Update("update user set nickname = #{nickname}, signature = #{signature}, update_time = #{updateTime} where id = #{id}")
     void update(User user);
 
     //更新用户头像
@@ -32,8 +44,4 @@ public interface UserMapper {
     //删除用户
     @Update("delete from user where id = #{userId}")
     void deleteAcc(Integer userId);
-
-    // 查询其他用户信息
-    @Select("select * from user where id = #{userId}")
-    OtherUser getOtherUserById(Integer userId);
 }

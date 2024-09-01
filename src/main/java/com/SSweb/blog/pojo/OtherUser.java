@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 // 展示其他用户信息的实体类
-// 仅展示用户名,昵称,头像,注册时间
+// 仅展示用户名,昵称,头像,注册时间,签名,背景
 @Data
 public class OtherUser {
     // @JsonIgnore 这个注解表示在实体类转换成json的时候,忽略这个属性
@@ -22,7 +22,9 @@ public class OtherUser {
     @JsonIgnore
     private String email;
 
+    private String signature;
     private String userPic;
+    private String background;
     private LocalDateTime createTime;
 
     @JsonIgnore

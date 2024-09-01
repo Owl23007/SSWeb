@@ -24,9 +24,10 @@ public class User {
     @NotEmpty
     @Pattern(regexp = "^\\S{1,10}$")
     private String nickname;
-
     private String email;
+    private String signature;
     private String userPic;
+    private String background;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

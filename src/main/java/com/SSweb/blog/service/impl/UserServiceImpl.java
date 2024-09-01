@@ -24,6 +24,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return userMapper.getUserByEmail(email);
+    }
+
+    @Override
+    public OtherUser getOtherUserById(Integer userId) {
+        // 获取其他用户对象
+        return userMapper.getOtherUserById(userId);
+    }
+
+    @Override
     public void register(String username, String email, String password) {
         // 加密密码
         String RSAPassword = RsaUtil.getRSA(password);
@@ -32,11 +43,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(User user) {
-        // 设置更新时间
-        user.setUpdateTime(LocalDateTime.now());
+    public void update(String nickname,String signature) {
+        // 获取用户
+        Map<String,Object> map = ThreadLocalUtil.get();
+        String username = (String) map.get("username");
+        User u = userMapper.getUserByUsername(username);
         // 更新用户基本信息
-        userMapper.update(user);
+        u.setNickname(nickname);
+        u.setSignature(signature);
+        // 设置更新时间
+        u.setUpdateTime(LocalDateTime.now());
+        // 更新用户基本信息
+        userMapper.update(u);
+    }
+
+    @Override
+    public void init(String username) {
+        User u = userMapper.getUserByUsername(username);
+        userMapper.init(u.getId(), String.format("存续院用户%d", u.getId()), "这个用户还没有设置签名哦~");
     }
 
     @Override
@@ -63,11 +87,5 @@ public class UserServiceImpl implements UserService {
     public void deleteAcc(Integer userId) {
         // 删除用户
         userMapper.deleteAcc(userId);
-    }
-
-    @Override
-    public OtherUser getOtherUserById(Integer userId) {
-        // 获取其他用户对象
-        return userMapper.getOtherUserById(userId);
     }
 }
