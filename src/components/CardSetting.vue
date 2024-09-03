@@ -68,11 +68,6 @@ export default {
         const store = useStore();
         const isAvatarLoad = ref(false);
 
-
-
-
-
-
         const getAvatarFileData = (event) => {
             const file = event.target.files || event.dataTransfer.files;
             if (file.length > 0) {
