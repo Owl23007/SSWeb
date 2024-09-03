@@ -2,7 +2,18 @@
   <div class="container">
     <!-- 板块一：用户信息 -->
     <div class="user-info-section">
-      <div class="usercard" @click="editCard">
+      <div class="usercard-cover" @click="editCard" @mouseover="showCover" @mouseleave="hideCover">
+        <div class="edit-content">
+        <svg class="edit-icon" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16"
+          data-view-component="true">
+          <path
+            d="M15.707 1.293a1 1 0 0 1 0 1.414l-10 10a1 1 0 0 1-.39.24l-5 1.5a.75.75 0 0 1-.95-.95l1.5-5a1 1 0 0 1 .24-.39l10-10a1 1 0 0 1 1.414 0zM3.5 12.5L1.5 13.5l1-2 8.5-8.5-1-1-8.5 8.5z"
+            fill="currentColor"></path>
+        </svg>
+        <span class="edit-text">编辑卡片</span>
+        </div>  
+      </div>
+      <div class="usercard">
         <h2>个人卡片</h2>
         <UserCard :user="store.state.user" @update-avatar="updateAvatar" />
       </div>
@@ -35,9 +46,6 @@
             <strong>注册时间：</strong>
             <a>{{ store.state.user.createTime }}</a>
           </p>
-
-
-          <!-- 样式暂时用的 write-article-button -->
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
             class="right-entry-icon">
             <path
@@ -120,6 +128,7 @@ export default {
     const store = useStore();
     const articles = ref([]);
     const editInfoMode = ref(false);
+    const cardSetMode = ref(false);
 
     // 文章部分
     const title = ref('');
@@ -153,6 +162,18 @@ export default {
     const editInfo = () => {
       // 编辑用户信息的逻辑
       editInfoMode.value = !editInfoMode.value;
+    };
+
+    const showCover = () => {
+      const cover = document.querySelector('.usercard-cover');
+      cover.style.backgroundColor = '#000000';
+      cover.style.opacity = '0.5';
+    };
+
+    const hideCover = () => {
+      const cover = document.querySelector('.usercard-cover');
+      cover.style.backgroundColor = 'transparent';
+      cover.style.opacity = '0';
     };
 
     const updateInfo = async () => {
@@ -213,7 +234,10 @@ export default {
       state,
       categoryId,
       categoryName,
-      categoryAlias
+      categoryAlias,
+      cardSetMode,
+      showCover,
+      hideCover
     };
   }
 };

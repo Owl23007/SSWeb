@@ -5,8 +5,12 @@ const store = createStore({
     user: localStorage.getItem('user') || null,
     token: localStorage.getItem('jwt-token') || '',
     isLoggedIn: localStorage.getItem('jwt-token') !== null && localStorage.getItem('user') !== null,
+    CardSetting: false,
   },
   mutations: {
+    setCardSetting(state, mode) {
+      state.CardSetting = mode;
+    },
     setUser(state, user) {
       state.user = user;
       localStorage.setItem('user', state.user);
@@ -30,6 +34,9 @@ const store = createStore({
   },
 
   actions: {
+    async setcartsettingmode({ commit }, mode) {
+      commit('setCardSetting', mode);
+    },
     //登出
     async logout({ commit }) {
       localStorage.removeItem('jwt-token');

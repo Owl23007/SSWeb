@@ -1,8 +1,5 @@
 <template>
-
-    <div class="background">
-
-
+    <div class="background" v-if="isCardSetMode">
         <div class="card_setting_container">
             <div class="title">
                 <h1>个人卡片设置</h1>
@@ -16,14 +13,12 @@
             <UserCard />
             <div class="not_title">
                 <div class="avatar_setting">
-
                     <h1>头像设置</h1>
                     <div class="avatar">
-                        <img :src="store.state.userData.avatar" alt="avatar" v-if="isAvatarLoad" />
+                        <img :src="avatarPreview" alt="avatar" v-if="avatarPreview" />
                         <div v-else>
                             <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="1" y="1" width="18" height="18" stroke="gray" stroke-width="1"
-                                    stroke-dasharray="2,2" fill="none" />
+                                <rect x="1" y="1" width="18" height="18" stroke="gray" stroke-width="1" stroke-dasharray="2,2" fill="none" />
                                 <path d="M10 5 L10 13 M7 8 L10 5 L13 8" stroke="gray" stroke-width="1" fill="none" />
                             </svg>
                         </div>
@@ -31,18 +26,20 @@
                         <vue-cropper ref="cropper" :src="image" :aspect-ratio="1" :auto-crop="true" :view-mode="1"
                             :background="false" :guides="true" :crop-box-resizable="true" :crop-box-movable="true"
                             :drag-mode="'crop'" />
-                        <button @click="uploadAvatarFile">上传头像 </button>
+                        <button @click="uploadAvatarFile">上传头像</button>
                     </div>
-                    <div class="background_setting">
-                        <h1>背景设置</h1>
-                        <input @change="getBackgroundFileData" type="file" />
-                        <button @click="uploadBackgroundFile">上传</button>
+                </div>
+                <div class="background_setting">
+                    <h1>背景设置</h1>
+                    <div class="background_preview">
+                        <img :src="backgroundPreview" alt="background" v-if="backgroundPreview" />
                     </div>
+                    <input @change="getBackgroundFileData" type="file" />
+                    <button @click="uploadBackgroundFile">上传</button>
                 </div>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -52,15 +49,11 @@ import { ref } from 'vue';
 import { useStore } from 'vuex';
 import VueCropper from 'vue-cropper';
 
-
 export default {
-
     name: 'CardSetting',
-
     components: {
         VueCropper
     },
-
     setup() {
         const avatarFileInput = ref(null);
         const backgroundFileInput = ref(null);
@@ -68,21 +61,34 @@ export default {
         const store = useStore();
         const isAvatarLoad = ref(false);
         const isCardSetMode = ref(true);
+        const avatarPreview = ref(null);
+        const backgroundPreview = ref(null);
 
         const getAvatarFileData = (event) => {
             const file = event.target.files || event.dataTransfer.files;
             if (file.length > 0) {
                 avatarFileInput.value = file[0];
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    avatarPreview.value = e.target.result;
+                };
+                reader.readAsDataURL(file[0]);
                 isAvatarLoad.value = true;
             }
-            isAvatarLoad.value = false;
-        }
+        };
+
         const getBackgroundFileData = (event) => {
             const file = event.target.files || event.dataTransfer.files;
             if (file.length > 0) {
                 backgroundFileInput.value = file[0];
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    backgroundPreview.value = e.target.result;
+                };
+                reader.readAsDataURL(file[0]);
             }
-        }
+        };
+
         const uploadAvatarFile = async () => {
             const formData = new FormData();
             formData.append('file', avatarFileInput.value);
@@ -92,11 +98,11 @@ export default {
                 await updateAvatar_patch(store.state.token, res.data);
                 await store.dispatch('fetchUserData');
                 alert("更新成功！");
-            }
-            else {
+            } else {
                 alert("更新失败！");
             }
-        }
+        };
+
         const uploadBackgroundFile = async () => {
             const formData = new FormData();
             formData.append('file', backgroundFileInput.value);
@@ -106,15 +112,14 @@ export default {
                 await updateBackground_patch(store.state.token, res.data);
                 await store.dispatch('fetchUserData');
                 alert("更新成功！");
-            }
-            else {
+            } else {
                 alert("更新失败！");
             }
-        }
+        };
 
         const closepage = async () => {
             await store.dispatch('setcartsettingmode', false);
-        }
+        };
 
         return {
             closepage,
@@ -124,10 +129,12 @@ export default {
             uploadBackgroundFile,
             image,
             isAvatarLoad,
-            isCardSetMode
-        }
+            isCardSetMode,
+            avatarPreview,
+            backgroundPreview
+        };
     }
-}
+};
 </script>
 
 <style scoped>
@@ -136,7 +143,6 @@ export default {
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    /* 黑色背景，50%透明度 */
     height: 100%;
     width: 100%;
     z-index: 5;
@@ -146,26 +152,22 @@ export default {
 }
 
 .title {
-    /* 横向布局 */
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
 }
 
 .close-button {
-    /* Add some CSS properties here */
     margin-right: 20px;
 }
 
 .not_title {
     height: 80%;
-    /* 纵向布局 */
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
-
 
 .card_setting_container {
     height: 60%;
@@ -174,13 +176,26 @@ export default {
     background-color: white;
     display: flex;
     flex-direction: column;
-    /* 纵向布局 */
-
     margin-top: 50px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 .card_setting_container h1 {
     margin-left: 20px;
+}
+
+.avatar_setting,
+.background_setting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar img,
+.background_preview img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 </style>
