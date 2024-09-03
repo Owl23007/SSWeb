@@ -29,3 +29,18 @@ export const addCategory_post = async (token, categoryName, categoryAlias) => {
     })
     return response.data;
 };
+
+export const getArticles_get = async (token, pageNum, pageSize) => {
+    const response = await axios.get('http://localhost:8080/article/list',
+        {
+            params: {
+                pageNum: pageNum,
+                pageSize: pageSize
+            },
+            headers: {
+                'Authorization': 'Duel ' + token
+            }
+        }
+    );
+    return response.data;
+};
