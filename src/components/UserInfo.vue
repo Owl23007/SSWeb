@@ -2,38 +2,38 @@
   <div class="container">
     <!-- 板块一：用户信息 -->
     <div class="user-info-section">
-      <div @click="editCard">
+      <div class="usercard" @click="editCard">
         <h2>个人卡片</h2>
-        <UserCard :user="user" @update-avatar="updateAvatar" />
+        <UserCard :user="store.state.user" @update-avatar="updateAvatar" />
       </div>
       <div style="margin-left: 15px" v-if="!cardSetMode">
         <div class="user-details">
           <h2>个人信息</h2>
           <p>
             <strong>昵称：</strong>
-            <a v-if="!editInfoMode">{{ user.nickname }}</a>
-            <input v-model="user.nickname" v-if="editInfoMode" />
+            <a v-if="!editInfoMode">{{ store.state.user.nickname }}</a>
+            <input v-model="store.state.user.nickname" v-if="editInfoMode" />
           </p>
           <p>
             <strong>账号：</strong>
-            <a>{{ user.username }}</a>
+            <a>{{ store.state.user.username }}</a>
           </p>
           <p>
             <strong>邮箱：</strong>
-            <a>{{ user.email }}</a>
+            <a>{{ store.state.user.email }}</a>
           </p>
           <p>
             <strong>个人签名：</strong>
-            <a v-if="!editInfoMode">{{ user.signature }}</a>
-            <input v-model="user.signature" v-if="editInfoMode" />
+            <a v-if="!editInfoMode">{{ store.state.user.signature }}</a>
+            <input v-model="store.state.user.signature" v-if="editInfoMode" />
           </p>
           <p class="gray-text">
             <strong>ID:</strong>
-            <a>{{ user.id }}</a>
+            <a>{{ store.state.user.id }}</a>
           </p>
           <p class="gray-text">
             <strong>注册时间：</strong>
-            <a>{{ user.createTime }}</a>
+            <a>{{ store.state.user.createTime }}</a>
           </p>
 
 
@@ -60,7 +60,6 @@
           编辑
         </div>
       </div>
-
     </div>
 
 
@@ -81,18 +80,35 @@
       <button class="more-button" @click="loadMoreArticles">更多</button>
     </div>
   </div>
-  <div class="card-setting" v-if="cardSetMode">
+  <div>
+    <input type="text" placeholder="标题" v-model="title">
+    <input type="text" placeholder="正文" v-model="content">
+    <input type="text" placeholder="封面地址" v-model="coverImg">
+    <select name="category" v-model="state">
+      <option value="草稿">草稿</option>
+      <option value="已发布">已发布</option>
+    </select>
+    <input type="number" placeholder="ID" v-model="categoryId">
+    <button @click="addArticle">提交</button>
+  </div>
+  <div>
+    <input type="text" placeholder="分类名" v-model="categoryName">
+    <input type="text" placeholder="别名" v-model="categoryAlias">
+    <button @click="addCategory">提交</button>
+  </div>
+  <div class="card-setting" v-if="store.state.CardSetting">
     <CardSetting />
   </div>
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import defaultAvatar from '@/assets/default-avatar.png';
 import UserCard from './UserCard.vue';
 import { updateUserInfo_put } from '../assets/script/user_request.js';
 import CardSetting from './CardSetting.vue';
+import { addArticle_post, addCategory_post } from '../assets/script/article_request.js';
 
 export default {
   name: 'UserInfo',
@@ -102,10 +118,19 @@ export default {
   },
   setup() {
     const store = useStore();
-    const user = computed(() => store.state.user);
     const articles = ref([]);
     const editInfoMode = ref(false);
-    const cardSetMode = ref(false)
+
+    // 文章部分
+    const title = ref('');
+    const content = ref('');
+    const coverImg = ref('');
+    const state = ref('草稿');
+    const categoryId = ref(1);
+
+    // 分类部分
+    const categoryName = ref('');
+    const categoryAlias = ref('');
 
     onMounted(async () => {
       if (!store.state.user) {
@@ -120,9 +145,9 @@ export default {
       }
     });
 
-    const editCard = () => {
+    const editCard = async () => {
       // 编辑卡片的逻辑
-      cardSetMode.value = !cardSetMode.value;
+      await store.dispatch('setcartsettingmode', true);
     };
 
     const editInfo = () => {
@@ -133,12 +158,32 @@ export default {
     const updateInfo = async () => {
       // 更新用户信息的逻辑
       editInfoMode.value = false;
-      const res = await updateUserInfo_put(store.state.token, user.value.nickname, user.value.signature)
+      const res = await updateUserInfo_put(store.state.token, store.state.user.nickname, store.state.user.signature)
       if (res.code === 0) {
         await store.dispatch('fetchUserData');
         alert("更新成功！");
       } else {
         alert("更新失败！");
+      }
+    };
+
+    const addArticle = async () => {
+      // 添加新文章的逻辑
+      const res = await addArticle_post(store.state.token, title.value, content.value, coverImg.value, state.value, categoryId.value);
+      if (res.code === 0) {
+        alert("添加成功！");
+      } else {
+        alert("添加失败！");
+      }
+    };
+
+    const addCategory = async () => {
+      // 添加新文章分类的逻辑
+      const res = await addCategory_post(store.state.token, categoryName.value, categoryAlias.value);
+      if (res.code === 0) {
+        alert("添加成功！");
+      } else {
+        alert("添加失败！");
       }
     };
 
@@ -151,16 +196,24 @@ export default {
     };
 
     return {
-      user,
+      store,
       articles,
       editInfoMode,
-      cardSetMode,
       editCard,
       editInfo,
       writeArticle,
+      addArticle,
+      addCategory,
       loadMoreArticles,
       updateInfo,
       defaultAvatar,
+      title,
+      content,
+      coverImg,
+      state,
+      categoryId,
+      categoryName,
+      categoryAlias
     };
   }
 };

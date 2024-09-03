@@ -1,6 +1,6 @@
 .container {
   margin-top: 5%;
-  margin-left:15% ;
+  margin-left: 15%;
   padding: 20px;
   max-width: 70%;
   shape-rendering: auto;
@@ -17,23 +17,26 @@
   position: relative;
   max-height: 320px;
 }
+
 .user-info-section h2 {
   margin-top: 10px;
 }
+
 .user-details {
   /* 右置顶 */
-  margin-left:auto;
+  margin-left: auto;
   position: relative;
- 
+
   max-width: 400px;
   max-height: 320px;
   margin-bottom: 20px;
   align-items: top;
 }
 
-.user-details h2{
+.user-details h2 {
   margin-top: 10px;
 }
+
 .edit-avatar-button {
   position: absolute;
   bottom: 0;
@@ -68,10 +71,11 @@
   border: 1px solid rgb(176, 176, 176);
   border-radius: 5px;
   padding: 5px;
- 
+
   cursor: pointer;
- 
+
 }
+
 .edit-info-button:hover {
   background: #b5b5b5;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);

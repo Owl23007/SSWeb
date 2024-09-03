@@ -6,7 +6,7 @@
         <div class="card_setting_container">
             <div class="title">
                 <h1>个人卡片设置</h1>
-                <div class="close-button">
+                <div class="close-button" @click="closepage">
                     <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <line x1="1" y1="1" x2="20" y2="20" stroke="gray" stroke-width="2" />
                         <line x1="1" y1="20" x2="20" y2="1" stroke="gray" stroke-width="2" />
@@ -67,6 +67,7 @@ export default {
         const image = ref(null);
         const store = useStore();
         const isAvatarLoad = ref(false);
+        const isCardSetMode = ref(true);
 
         const getAvatarFileData = (event) => {
             const file = event.target.files || event.dataTransfer.files;
@@ -110,13 +111,20 @@ export default {
                 alert("更新失败！");
             }
         }
+
+        const closepage = async () => {
+            await store.dispatch('setcartsettingmode', false);
+        }
+
         return {
+            closepage,
             getAvatarFileData,
             getBackgroundFileData,
             uploadAvatarFile,
             uploadBackgroundFile,
             image,
-            isAvatarLoad
+            isAvatarLoad,
+            isCardSetMode
         }
     }
 }

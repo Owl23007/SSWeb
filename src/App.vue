@@ -76,6 +76,7 @@ export default {
       router.push('/');
     };
 
+   
     // 在载入页面时调用
     onMounted(async () => {
       if (isLoggedIn.value) {
