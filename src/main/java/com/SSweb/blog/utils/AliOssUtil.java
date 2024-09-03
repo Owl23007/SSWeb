@@ -4,6 +4,8 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
+import com.aliyun.oss.common.auth.CredentialsProviderFactory;
+import com.aliyun.oss.common.auth.EnvironmentVariableCredentialsProvider;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 
@@ -13,16 +15,17 @@ import java.io.InputStream;
 public class AliOssUtil {
     // 节点域名
     private static final String EndPoint = "";
-    // 阿里云KEY_ID
-    private static final String ID = "";
-    // 阿里云KEY_SECRET
-    private static final String SECRET = "";
     // 存储空间名
     private static final String Bucket_Name = "";
+    // 访问密钥id
+    private static final String ACCESS_KEY_ID = "";
+    // 访问密钥key
+    private static final String ACCESS_KEY_SECRET = "";
 
-    public static String uploadFile(String fileName, InputStream in) throws Exception {
+    public static String uploadFile(String fileName, InputStream in) {
+
         // 创建OSSClient实例。
-        OSS ossClient = new OSSClientBuilder().build(EndPoint, ID, SECRET);
+        OSS ossClient = new OSSClientBuilder().build(EndPoint, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
         try {
             // 创建PutObjectRequest对象。
             PutObjectRequest putObjectRequest = new PutObjectRequest(Bucket_Name, fileName, in);
