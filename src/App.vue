@@ -2,50 +2,53 @@
   <div id="app">
     <div>
       <header class="header_style">
-        <div class="nav_left">
-          <div class="nav_logo_title">
-            <nav>
-              <a href="#" class="logo">
-                <router-link to="/" class="no-underline"><img src="@/assets/logo.png" alt="logo"
-                    style="height: 40px;"></router-link>
-              </a>
-            </nav>
-            <span class="nav_title">存续院</span>
-          </div>
-          <div class="nav_links">
-            <div class="header_button">
-              <router-link to="/" class="no-underline">主页</router-link>
+        <div class="leader">
+          <div class="nav_left">
+            <div class="nav_logo_title">
+              <nav>
+                <a href="#" class="logo">
+                  <router-link to="/" class="no-underline"><img src="@/assets/logo.png" alt="logo"
+                      style="height: 40px;"></router-link>
+                </a>
+              </nav>
+              <span class="nav_title">存续院</span>
             </div>
-            <div class="header_button">
-              <router-link to="/resources" class="no-underline">资源</router-link>
-            </div>
-            <div class="header_button">
-              <router-link to="/article" class="no-underline">文章</router-link>
+            <div class="nav_links">
+              <div class="header_button">
+                <router-link to="/" class="no-underline">主页</router-link>
+              </div>
+              <div class="header_button">
+                <router-link to="/resources" class="no-underline">资源</router-link>
+              </div>
+              <div class="header_button">
+                <router-link to="/article" class="no-underline">文章</router-link>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="nav_menu">
-          <ul>
-            <li class="nav_search">
-              <input type="text" placeholder="世界在你脚下..." class="search_input">
-              <button class="search_button">搜索</button>
-            </li>
-          </ul>
-        </div>
-        <div class="nav_right">
-          <div v-if="!isLoggedIn" class="header_button">
-            <router-link to="/login" class="no-underline">登录</router-link>
+          <div class="nav_menu">
+            <ul>
+              <li class="nav_search">
+                <input type="text" placeholder="世界在你脚下..." class="search_input">
+                <button class="search_button">搜索</button>
+              </li>
+            </ul>
           </div>
-          <div v-else class="avatar_button">
-            <div class="dropdown">
-              <img :src="user.userPic || defaultAvatar" alt="用户头像" class="avatar">
-              <div class="dropdown-content">
-                <router-link to="/userinfo" class="no-underline">个人主页</router-link>
-                <a href="#" @click="logout">退出登录</a>
+          <div class="nav_right">
+            <div v-if="!isLoggedIn" class="header_button">
+              <router-link to="/login" class="no-underline">登录</router-link>
+            </div>
+            <div v-else class="avatar_button">
+              <div class="dropdown">
+                <img :src="user.userPic || defaultAvatar" alt="用户头像" class="avatar">
+                <div class="dropdown-content">
+                  <router-link to="/userinfo" class="no-underline">个人主页</router-link>
+                  <a href="#" @click="logout">退出登录</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
       </header>
     </div>
     <div class="main_container">
@@ -95,28 +98,35 @@ export default {
 <style>
 body {
   background-color: #f0f0f0;
-  /* 设置整个页面的背景颜色为偏灰的白色 */
   font-family: 'Roboto', sans-serif;
-  /* 设置全局字体 */
   font-size: 16px;
-  /* 设置全局字体大小 */
   line-height: 1.6;
-  /* 设置全局行高 */
 }
 
 .header_style {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px;
-  background-color: #f8f9fa;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /* 添加下阴影 */
-  border-radius: 10px;
-  /* 添加圆角 */
-  height: 50px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  position: fixed;
+  top: 0;
+  z-index: 4;
 }
 
+.leader {
+  margin: auto;
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  width: 98%;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  height: 50px;
+}
 .nav_left {
   display: flex;
   align-items: center;
