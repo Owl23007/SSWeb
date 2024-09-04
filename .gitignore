@@ -34,3 +34,6 @@ build/
 
 ### Eclipse ###
 src/main/resources/application.properties
+
+### 忽略AliOssUtil.java ###
+src/main/java/com/SSweb/blog/utils/AliOssUtil.java

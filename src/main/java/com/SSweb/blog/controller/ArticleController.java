@@ -5,6 +5,7 @@ import com.SSweb.blog.pojo.Article;
 import com.SSweb.blog.pojo.PreviewArticle;
 import com.SSweb.blog.pojo.Result;
 import com.SSweb.blog.service.ArticleService;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,5 +29,14 @@ public class ArticleController {
     @GetMapping("/list")
     public Result<List<PreviewArticle>> onList(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
         return Result.success(articleService.list(pageNum, pageSize));
+    }
+
+    @GetMapping("/article")
+    public Result onGetArticle(@RequestParam @NotNull Integer articleId){
+        Article article = articleService.getArticleById(articleId);
+        if(article == null){
+            return Result.error("文章不存在");
+        }
+        return Result.success(article);
     }
 }

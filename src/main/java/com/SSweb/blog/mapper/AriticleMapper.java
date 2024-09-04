@@ -18,4 +18,8 @@ public interface AriticleMapper {
     // 获取文章列表
     @Select("select * from article")
     List<PreviewArticle> list();
+
+    // 根据文章id获取文章
+    @Select("select * from article where id = #{id}")
+    Article getArticleById(Integer id);
 }

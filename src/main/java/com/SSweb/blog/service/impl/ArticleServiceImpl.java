@@ -13,9 +13,11 @@ import java.util.Map;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
+
     @Autowired
     private AriticleMapper ariticleMapper;
 
+    // 添加文章
     @Override
     public void add(Article article) {
         Map<String,Object> map = ThreadLocalUtil.get();
@@ -24,6 +26,7 @@ public class ArticleServiceImpl implements ArticleService {
         ariticleMapper.add(article);
     }
 
+    // 获取文章列表（返回预览文章）
     @Override
     public List<PreviewArticle> list(Integer pageNum, Integer pageSize) {
         List<PreviewArticle> list = ariticleMapper.list();
@@ -33,5 +36,11 @@ public class ArticleServiceImpl implements ArticleService {
         if (end > list.size()) end = list.size();
         // 返回列表
         return list.subList(start, end);
+    }
+
+    // 根据Id获取文章详情
+    @Override
+    public Article getArticleById(Integer id) {
+        return ariticleMapper.getArticleById(id);
     }
 }
