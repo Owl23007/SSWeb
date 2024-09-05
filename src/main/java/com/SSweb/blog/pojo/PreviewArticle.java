@@ -1,4 +1,5 @@
 package com.SSweb.blog.pojo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -17,6 +18,7 @@ public class PreviewArticle {
     private String state;
     private Integer categoryId;
     private Integer createUser;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
     @JsonIgnore
     private LocalDateTime updateTime;

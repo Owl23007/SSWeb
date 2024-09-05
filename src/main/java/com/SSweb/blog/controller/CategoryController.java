@@ -27,4 +27,9 @@ public class CategoryController {
     public Result<List<Category>> onList(){
         return Result.success(categoryService.list());
     }
+
+    @GetMapping("/getCategoryById")
+    public Result<String> onGetCategoryById(@RequestParam Integer categoryId){
+        return Result.success(categoryService.getCategoryById(categoryId));
+    }
 }

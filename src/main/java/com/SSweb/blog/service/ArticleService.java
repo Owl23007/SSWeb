@@ -15,4 +15,10 @@ public interface ArticleService {
 
     // 根据文章id获取文章
     Article getArticleById(Integer articleId);
+
+    // 获取用户的文章预览信息
+    List<PreviewArticle> getUserArticle();
+
+    // 删除文章
+    boolean delete(Integer articleId);
 }

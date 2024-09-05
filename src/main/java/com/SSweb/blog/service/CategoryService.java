@@ -9,4 +9,6 @@ public interface CategoryService {
     void add(Category category);
 
     List<Category> list();
+
+    String getCategoryById(Integer categoryId);
 }

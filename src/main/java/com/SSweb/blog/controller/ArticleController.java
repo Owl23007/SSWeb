@@ -20,17 +20,28 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    // 新增文章
     @PostMapping("/add")
     public Result onAdd(@RequestBody Article article){
         articleService.add(article);
         return Result.success();
     }
 
+    // 删除文章
+    @DeleteMapping("/delete")
+    public Result onDelete(@RequestParam Integer articleId){
+        if (articleService.delete(articleId))
+            return Result.success();
+        return Result.error("你没有权限删除这篇文章");
+    }
+
+    // 获取文章预览列表
     @GetMapping("/list")
     public Result<List<PreviewArticle>> onList(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
         return Result.success(articleService.list(pageNum, pageSize));
     }
 
+    // 获取文章详情
     @GetMapping("/article")
     public Result onGetArticle(@RequestParam @NotNull Integer articleId){
         Article article = articleService.getArticleById(articleId);
@@ -38,5 +49,12 @@ public class ArticleController {
             return Result.error("文章不存在");
         }
         return Result.success(article);
+    }
+
+    // 获取用户文章预览
+    @GetMapping("/userArticle")
+    public Result<List<PreviewArticle>> onGetUserArticle(){
+        List<PreviewArticle> articles = articleService.getUserArticle();
+        return Result.success(articles);
     }
 }

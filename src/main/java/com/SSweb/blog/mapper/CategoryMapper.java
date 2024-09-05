@@ -17,4 +17,8 @@ public interface CategoryMapper {
     // 查询指定用户的文章分类
     @Select("select * from category where create_user = #{id}")
     List<Category> list(Integer id);
+
+    // 根据分类id查询分类
+    @Select("select * from category where id = #{categoryId}")
+    Category getCategoryById(Integer categoryId);
 }

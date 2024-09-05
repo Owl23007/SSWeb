@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -42,5 +43,32 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article getArticleById(Integer id) {
         return ariticleMapper.getArticleById(id);
+    }
+
+    // 获取用户的文章
+    @Override
+    public List<PreviewArticle> getUserArticle() {
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("id");
+        List<PreviewArticle> list = ariticleMapper.getArticleByUser(id);
+        // 获取最后四项，如果不足4项，则返回全部
+        if (list.size() > 4)
+            list = list.subList(list.size() - 4, list.size());
+        return list;
+    }
+
+    // 删除文章
+    @Override
+    public boolean delete(Integer articleId) {
+        // 获取用户id
+        Map<String,Object> map = ThreadLocalUtil.get();
+        Integer id = (Integer) map.get("id");
+        // 根据文章id 查询文章
+        Article article = ariticleMapper.getArticleById(articleId);
+        if (Objects.equals(article.getCreateUser(), id)){
+            ariticleMapper.delete(articleId);
+            return true;
+        }
+        return false;
     }
 }
