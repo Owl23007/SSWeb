@@ -78,31 +78,23 @@
         <button class="write-article-button" @click="writeArticle">
           <i class="fas fa-pen"></i> 撰写
         </button>
+
+      </div>
+      <div class="articles-container">
         <div v-if="articles.length === 0" class="empty-state">
           <p>暂无文章，请稍后再试。</p>
         </div>
-
-        <div v-else>
-          <div v-for="article in articles" :key="article.id" class="article-item">
-
-            <img :src="article.coverImg" alt="Article Image" class="article-image" />
-            <div class="article-content">
-              <h2>{{ article.title }}</h2>
-              <p>{{ article.categoryId }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="articles-container">
-        <div class="article-box" v-for="article in articles" :key="article.id">
-          <h3>{{ article.title }}</h3>
-          <p>{{ article.summary }}</p>
+        <div class="article-box" v-else v-for="article in articles" :key="article.id">
+          <ArticlePerview :data="article" />
         </div>
       </div>
       <button class="more-button" @click="loadMoreArticles">更多</button>
     </div>
   </div>
+
+  <!-- 测试用 -->
   <div>
+    新增文章
     <input type="text" placeholder="标题" v-model="title">
     <input type="text" placeholder="正文" v-model="content">
     <input type="text" placeholder="封面地址" v-model="coverImg">
@@ -114,6 +106,7 @@
     <button @click="addArticle">提交</button>
   </div>
   <div>
+    新增标签
     <input type="text" placeholder="分类名" v-model="categoryName">
     <input type="text" placeholder="别名" v-model="categoryAlias">
     <button @click="addCategory">提交</button>
@@ -130,14 +123,16 @@ import defaultAvatar from '@/assets/default-avatar.png';
 import UserCard from './UserCard.vue';
 import { updateUserInfo_put } from '../assets/script/user_request.js';
 import CardSetting from './CardSetting.vue';
-import { addArticle_post, addCategory_post, getUserArticles_get } from '../assets/script/article_request.js';
+import { addArticle_post, addCategory_post, getUserArticles_get, getCategory_get } from '../assets/script/article_request.js';
 import { PreviewArticle } from '../assets/script/pojo/article.js';
+import ArticlePerview from './ArticlePerview.vue';
 
 export default {
   name: 'UserInfo',
   components: {
     UserCard,
-    CardSetting
+    CardSetting,
+    ArticlePerview
   },
   setup() {
     const store = useStore();
@@ -167,6 +162,12 @@ export default {
         const res = await getUserArticles_get(store.state.token);
         if (res.code === 0) {
           articles.value = res.data.map(item => new PreviewArticle(item.id, item.title, item.coverImg, item.categoryId, item.createUser, item.createTime));
+          for (let i = 0; i < articles.value.length; i++) {
+            const res = await getCategory_get(store.state.token, articles.value[i].categoryId);
+            if (res.code === 0) {
+              articles.value[i].category = res.data;
+            }
+          }
         }
       } else {
 

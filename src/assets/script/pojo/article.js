@@ -24,6 +24,7 @@ export class PreviewArticle {
     id;
     title;
     coverImg;
+    category;
     categoryId;
     createUser;
     createTime;

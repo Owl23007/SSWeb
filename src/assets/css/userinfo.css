@@ -99,6 +99,8 @@
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .articles-container {

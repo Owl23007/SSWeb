@@ -3,6 +3,7 @@ import loginPage from '../components/LoginComponent.vue'
 import homePage from '../components/Home.vue'
 import UserInfo from '../components/UserInfo.vue'
 import ArticleList from '../components/ArticleList.vue'
+import Article from '../components/Article.vue'
 import store from '@/store';
 
 const routes = [
@@ -15,23 +16,31 @@ const routes = [
     path: '/login',
     name: 'loginPage',
     component: loginPage,
-    meta:{
+    meta: {
       title: '登录'
     }
   },
   {
-    path: '/article',
+    path: '/articlelist',
     name: 'ArticleList',
     component: ArticleList,
-    meta:{
-      title: '文章'
+    meta: {
+      title: '文章列表'
+    }
+  },
+  {
+    path: '/article/:id',
+    name: 'ArticleInfo',
+    component: Article,
+    meta: {
+      title: '文章详情',
     }
   },
   {
     path: '/userinfo',
     name: 'userinfoPage',
     component: UserInfo,
-    meta:{
+    meta: {
       title: '用户信息',
     }
   },
@@ -40,7 +49,7 @@ const routes = [
     name: 'homePage',
     requiresAuth: false,
     component: homePage,
-    meta:{
+    meta: {
       title: '首页'
     }
   }
@@ -55,7 +64,7 @@ const router = createRouter({
 // 设置页面标题和路径守卫
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || '默认标题';
-  
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // 需要认证的路由
     if (!store.state.isLoggedIn) {

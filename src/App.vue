@@ -21,7 +21,7 @@
                 <router-link to="/resources" class="no-underline">资源</router-link>
               </div>
               <div class="header_button">
-                <router-link to="/article" class="no-underline">文章</router-link>
+                <router-link to="/articlelist" class="no-underline">文章</router-link>
               </div>
             </div>
           </div>
