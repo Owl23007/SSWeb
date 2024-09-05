@@ -144,7 +144,9 @@
   /* 与 usercard 同步的圆角 */
   transition: background-color 0.3s, opacity 0.3s;
   /* 添加过渡效果 */
-
+  /* 使其在鼠标悬停时不能复制*/
+  user-select: none;
+  cursor: pointer;
 }
 
 .usercard-container:hover .usercard-cover {

@@ -44,3 +44,11 @@ export const getArticles_get = async (token, pageNum, pageSize) => {
     );
     return response.data;
 };
+
+export const getUserArticles_get = async (token) => {
+    const response = await axios.get('http://localhost:8080/article/userArticle',{
+            headers: {
+                'Authorization': 'Duel ' + token
+            }});
+    return response.data;
+}

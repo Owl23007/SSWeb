@@ -4,14 +4,14 @@
     <div class="user-info-section">
       <div class="usercard-cover" @click="editCard" @mouseover="showCover" @mouseleave="hideCover">
         <div class="edit-content">
-        <svg class="edit-icon" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16"
-          data-view-component="true">
-          <path
-            d="M15.707 1.293a1 1 0 0 1 0 1.414l-10 10a1 1 0 0 1-.39.24l-5 1.5a.75.75 0 0 1-.95-.95l1.5-5a1 1 0 0 1 .24-.39l10-10a1 1 0 0 1 1.414 0zM3.5 12.5L1.5 13.5l1-2 8.5-8.5-1-1-8.5 8.5z"
-            fill="currentColor"></path>
-        </svg>
-        <span class="edit-text">编辑卡片</span>
-        </div>  
+          <svg class="edit-icon" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16"
+            data-view-component="true">
+            <path
+              d="M15.707 1.293a1 1 0 0 1 0 1.414l-10 10a1 1 0 0 1-.39.24l-5 1.5a.75.75 0 0 1-.95-.95l1.5-5a1 1 0 0 1 .24-.39l10-10a1 1 0 0 1 1.414 0zM3.5 12.5L1.5 13.5l1-2 8.5-8.5-1-1-8.5 8.5z"
+              fill="currentColor"></path>
+          </svg>
+          <span class="edit-text">编辑卡片</span>
+        </div>
       </div>
       <div class="usercard">
         <h2>个人卡片</h2>
@@ -78,6 +78,20 @@
         <button class="write-article-button" @click="writeArticle">
           <i class="fas fa-pen"></i> 撰写
         </button>
+        <div v-if="articles.length === 0" class="empty-state">
+          <p>暂无文章，请稍后再试。</p>
+        </div>
+
+        <div v-else>
+          <div v-for="article in articles" :key="article.id" class="article-item">
+
+            <img :src="article.coverImg" alt="Article Image" class="article-image" />
+            <div class="article-content">
+              <h2>{{ article.title }}</h2>
+              <p>{{ article.categoryId }}</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="articles-container">
         <div class="article-box" v-for="article in articles" :key="article.id">
@@ -116,7 +130,8 @@ import defaultAvatar from '@/assets/default-avatar.png';
 import UserCard from './UserCard.vue';
 import { updateUserInfo_put } from '../assets/script/user_request.js';
 import CardSetting from './CardSetting.vue';
-import { addArticle_post, addCategory_post } from '../assets/script/article_request.js';
+import { addArticle_post, addCategory_post, getUserArticles_get } from '../assets/script/article_request.js';
+import { PreviewArticle } from '../assets/script/pojo/article.js';
 
 export default {
   name: 'UserInfo',
@@ -126,9 +141,11 @@ export default {
   },
   setup() {
     const store = useStore();
-    const articles = ref([]);
     const editInfoMode = ref(false);
     const cardSetMode = ref(false);
+
+    // 我的文章
+    const articles = ref([]);
 
     // 文章部分
     const title = ref('');
@@ -147,7 +164,10 @@ export default {
       }
       if (store.state.isLoggedIn) {
         // 假设一个获取用户投稿的 action
-        articles.value = await store.dispatch('fetchUserArticles');
+        const res = await getUserArticles_get(store.state.token);
+        if (res.code === 0) {
+          articles.value = res.data.map(item => new PreviewArticle(item.id, item.title, item.coverImg, item.categoryId, item.createUser, item.createTime));
+        }
       } else {
 
         //router.push('/login');
