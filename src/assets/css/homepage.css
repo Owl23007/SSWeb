@@ -19,6 +19,8 @@ main {
     color: #ffffff;
     padding: 40px;
     text-align: center;
+    /* 圆角 */
+    border-radius: 6px;
 }
 
 .hero h1 {

@@ -23,12 +23,18 @@ export default {
   },
   setup() {
     const store = useStore();
+    // 文章列表
     const articles = ref([]);
 
+    // 在组件挂载时，获取文章列表
     onMounted(async () => {
+      // 获取文章列表（第1页，每页5条）
       const res = await getArticles_get(store.state.token, 1, 5);
+
       if (res.code === 0) {
+        // 将数据转换为 PreviewArticle 对象
         articles.value = res.data.map(item => new PreviewArticle(item.id, item.title, item.coverImg, item.categoryId, item.createUser, item.createTime));
+        // 获取文章分类
         for (let i = 0; i < articles.value.length; i++) {
           const res = await getCategory_get(store.state.token, articles.value[i].categoryId);
           if (res.code === 0) {

@@ -14,6 +14,7 @@
 
 <script>
 export default {
+  // 接收父组件传递的参数
   props: {
     user: {
       type: Object,

@@ -24,12 +24,10 @@ export default {
         onMounted(async () => {
             // 获取路由参数
             const id = window.location.href.split('/').pop();
-            console.log(id)
+            // 获取根据id获取文章详情
             const res = await getArticleByID_get(store.state.token, id)
-            console.log(res)
             if (res.code === 0) {
                 article.value = res.data
-                console.log(article.value)
             }
         })
         return {
@@ -41,6 +39,6 @@ export default {
 
 <style scoped>
 .article {
-    padding-top: 100px;
+    padding-top: 70px;
 }
 </style>

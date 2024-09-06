@@ -10,9 +10,10 @@
                 <div class="article_preview_createtime">发布时间: {{ data.createTime }}</div>
             </div>
         </div>
-        <div class="button" v-if="data.createUser === store.state.user.id">
+        <div class="button">
             <button class="function_button" @click="checkArticle(data.id)">查看</button>
-            <button class="function_button" @click="deleteArticle(data.id)">删除</button>
+            <button class="function_button" @click="deleteArticle(data.id)"
+                v-if="data.createUser === store.state.user.id">删除</button>
         </div>
     </div>
 </template>
@@ -25,6 +26,7 @@ import router from '@/router';
 
 export default {
     name: 'ArticlePerview',
+    // 接收父组件传递的数据，类型为 PreviewArticle
     props: {
         data: {
             type: PreviewArticle,
@@ -34,6 +36,7 @@ export default {
     setup() {
         const store = useStore();
 
+        // 删除文章
         const deleteArticle = async (id) => {
             const res = await deleteArticle_delete(store.state.token, id);
             if (res.code === 0) {
@@ -44,11 +47,12 @@ export default {
             }
         }
 
+        // 查看文章
         const checkArticle = async (id) => {
             const res = await getArticleByID_get(store.state.token, id);
             if (res.code === 0) {
                 alert("获取文章成功！");
-                // 路由到 文章详情页
+                // 路由到 文章详情页，传入文章id
                 router.push({ name: 'ArticleInfo', params: { id: id } });
             } else {
                 alert("获取文章失败！");

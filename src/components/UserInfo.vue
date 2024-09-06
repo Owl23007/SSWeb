@@ -135,7 +135,10 @@ export default {
     ArticlePerview
   },
   setup() {
+    // 获取store
     const store = useStore();
+
+    // 当前页面的状态
     const editInfoMode = ref(false);
     const cardSetMode = ref(false);
 
@@ -154,14 +157,17 @@ export default {
     const categoryAlias = ref('');
 
     onMounted(async () => {
+      // 获取用户信息
       if (!store.state.user) {
         articles.value = await store.dispatch('fetchUserInfo');
       }
       if (store.state.isLoggedIn) {
-        // 假设一个获取用户投稿的 action
+        // 获取用户文章
         const res = await getUserArticles_get(store.state.token);
         if (res.code === 0) {
+          // 将数据转换为预览文章对象
           articles.value = res.data.map(item => new PreviewArticle(item.id, item.title, item.coverImg, item.categoryId, item.createUser, item.createTime));
+          // 获取分类信息
           for (let i = 0; i < articles.value.length; i++) {
             const res = await getCategory_get(store.state.token, articles.value[i].categoryId);
             if (res.code === 0) {
@@ -169,39 +175,40 @@ export default {
             }
           }
         }
-      } else {
-
-        //router.push('/login');
       }
     });
 
+    // 编辑卡片
     const editCard = async () => {
-      // 编辑卡片的逻辑
       await store.dispatch('setcartsettingmode', true);
     };
 
+    // 编辑信息
     const editInfo = () => {
-      // 编辑用户信息的逻辑
       editInfoMode.value = !editInfoMode.value;
     };
 
+    // 显示背景
     const showCover = () => {
       const cover = document.querySelector('.usercard-cover');
       cover.style.backgroundColor = '#000000';
       cover.style.opacity = '0.5';
     };
 
+    // 隐藏背景
     const hideCover = () => {
       const cover = document.querySelector('.usercard-cover');
       cover.style.backgroundColor = 'transparent';
       cover.style.opacity = '0';
     };
 
+    // 更新用户信息
     const updateInfo = async () => {
-      // 更新用户信息的逻辑
       editInfoMode.value = false;
+      // 更新用户信息
       const res = await updateUserInfo_put(store.state.token, store.state.user.nickname, store.state.user.signature)
       if (res.code === 0) {
+        // 更新用户数据
         await store.dispatch('fetchUserData');
         alert("更新成功！");
       } else {
@@ -209,8 +216,8 @@ export default {
       }
     };
 
+    // 提交文章
     const addArticle = async () => {
-      // 添加新文章的逻辑
       const res = await addArticle_post(store.state.token, title.value, content.value, coverImg.value, state.value, categoryId.value);
       if (res.code === 0) {
         alert("添加成功！");
@@ -219,8 +226,8 @@ export default {
       }
     };
 
+    // 提交分类
     const addCategory = async () => {
-      // 添加新文章分类的逻辑
       const res = await addCategory_post(store.state.token, categoryName.value, categoryAlias.value);
       if (res.code === 0) {
         alert("添加成功！");

@@ -1,17 +1,20 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import loginPage from '../components/LoginComponent.vue'
-import homePage from '../components/Home.vue'
-import UserInfo from '../components/UserInfo.vue'
-import ArticleList from '../components/ArticleList.vue'
-import Article from '../components/Article.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import loginPage from '../components/LoginComponent.vue';
+import homePage from '../components/Home.vue';
+import UserInfo from '../components/UserInfo.vue';
+import ArticleList from '../components/ArticleList.vue';
+import ResourceList from '../components/ResourceList.vue';
+import Article from '../components/Article.vue';
 import store from '@/store';
 
 const routes = [
+  // 默认路由
   {
     path: '/',
     redirect: '/home',// 设置重定向到 /home
     requiresAuth: false,
   },
+  // 登录页面
   {
     path: '/login',
     name: 'loginPage',
@@ -20,6 +23,7 @@ const routes = [
       title: '登录'
     }
   },
+  // 文章列表页面
   {
     path: '/articlelist',
     name: 'ArticleList',
@@ -28,6 +32,16 @@ const routes = [
       title: '文章列表'
     }
   },
+  // 资源列表页面
+  {
+    path: '/resourcelist',
+    name: 'ResourceList',
+    component: ResourceList,
+    meta: {
+      title: '资源列表'
+    }
+  },
+  // 文章详情页面
   {
     path: '/article/:id',
     name: 'ArticleInfo',
@@ -36,6 +50,7 @@ const routes = [
       title: '文章详情',
     }
   },
+  // 用户信息页面
   {
     path: '/userinfo',
     name: 'userinfoPage',
@@ -44,6 +59,7 @@ const routes = [
       title: '用户信息',
     }
   },
+  // 首页
   {
     path: '/home',
     name: 'homePage',

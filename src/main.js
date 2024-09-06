@@ -11,6 +11,4 @@ app.use(store);
 app.config.productionTip = false;
 app.config.globalProperties.$test = 'test';
 
-
-
 app.mount('#app');

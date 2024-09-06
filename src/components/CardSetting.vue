@@ -16,14 +16,16 @@
                     <div class="avatar">
                         <img :src="avatarPreview" alt="avatar" v-if="avatarPreview" />
                         <div v-else>
-                            <input @change="getAvatarFileData" type="file"/>
+                            <input @change="getAvatarFileData" type="file" />
                             <svg width="150" height="150" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="1" y="1" width="80" height="80" stroke="gray" stroke-width="1" stroke-dasharray="2,2" fill="none" />
-                                <path d="M40 60 L40 13 M 10 30 L40 10 L70 30" stroke="gray" stroke-width="3" fill="none" />
+                                <rect x="1" y="1" width="80" height="80" stroke="gray" stroke-width="1"
+                                    stroke-dasharray="2,2" fill="none" />
+                                <path d="M40 60 L40 13 M 10 30 L40 10 L70 30" stroke="gray" stroke-width="3"
+                                    fill="none" />
                             </svg>
                         </div>
-                        
-                      
+
+
                         <button @click="uploadAvatarFile">上传头像</button>
                     </div>
                 </div>
@@ -49,15 +51,20 @@ import { useStore } from 'vuex';
 export default {
     name: 'CardSetting',
     setup() {
+        // 获取文件
         const avatarFileInput = ref(null);
         const backgroundFileInput = ref(null);
         const image = ref(null);
+        // 获取store
         const store = useStore();
+        // 当前的状态
         const isAvatarLoad = ref(false);
         const isCardSetMode = ref(true);
+        // 预览图片
         const avatarPreview = ref(null);
         const backgroundPreview = ref(null);
 
+        // 获取头像文件
         const getAvatarFileData = (event) => {
             const file = event.target.files || event.dataTransfer.files;
             if (file.length > 0) {
@@ -71,6 +78,7 @@ export default {
             }
         };
 
+        // 获取背景文件
         const getBackgroundFileData = (event) => {
             const file = event.target.files || event.dataTransfer.files;
             if (file.length > 0) {
@@ -83,6 +91,7 @@ export default {
             }
         };
 
+        // 上传头像文件
         const uploadAvatarFile = async () => {
             const formData = new FormData();
             formData.append('file', avatarFileInput.value);
@@ -97,6 +106,7 @@ export default {
             }
         };
 
+        // 上传背景文件
         const uploadBackgroundFile = async () => {
             const formData = new FormData();
             formData.append('file', backgroundFileInput.value);
@@ -111,6 +121,7 @@ export default {
             }
         };
 
+        // 关闭页面
         const closepage = async () => {
             await store.dispatch('setcartsettingmode', false);
         };
@@ -131,5 +142,4 @@ export default {
 };
 </script>
 
-<style scoped src='@/assets/css/cardsetting.css'>
-</style>
+<style scoped src='@/assets/css/cardsetting.css'></style>
